@@ -33,9 +33,6 @@ class MyApp extends ConsumerWidget {
       designSize: const Size(360, 800),
       builder: (_,child) {
         return MaterialApp.router(
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: themeMode,

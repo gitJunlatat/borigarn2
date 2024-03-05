@@ -11,19 +11,154 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/services.dart';
 
+class $AssetsCategoryGen {
+  const $AssetsCategoryGen();
+
+  /// File path: assets/category/service_1_real_pic.jpg
+  AssetGenImage get service1RealPic =>
+      const AssetGenImage('assets/category/service_1_real_pic.jpg');
+
+  /// File path: assets/category/service_2_real_pic.jpg
+  AssetGenImage get service2RealPic =>
+      const AssetGenImage('assets/category/service_2_real_pic.jpg');
+
+  /// File path: assets/category/service_3_real_pic.jpg
+  AssetGenImage get service3RealPic =>
+      const AssetGenImage('assets/category/service_3_real_pic.jpg');
+
+  /// File path: assets/category/service_4_real_pic.jpg
+  AssetGenImage get service4RealPic =>
+      const AssetGenImage('assets/category/service_4_real_pic.jpg');
+
+  /// File path: assets/category/service_5_real_pic.jpg
+  AssetGenImage get service5RealPic =>
+      const AssetGenImage('assets/category/service_5_real_pic.jpg');
+
+  /// File path: assets/category/service_6_real_pic.jpg
+  AssetGenImage get service6RealPic =>
+      const AssetGenImage('assets/category/service_6_real_pic.jpg');
+
+  /// File path: assets/category/service_7_real_pic.jpg
+  AssetGenImage get service7RealPic =>
+      const AssetGenImage('assets/category/service_7_real_pic.jpg');
+
+  /// File path: assets/category/service_8_real_pic.jpg
+  AssetGenImage get service8RealPic =>
+      const AssetGenImage('assets/category/service_8_real_pic.jpg');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [
+        service1RealPic,
+        service2RealPic,
+        service3RealPic,
+        service4RealPic,
+        service5RealPic,
+        service6RealPic,
+        service7RealPic,
+        service8RealPic
+      ];
+}
+
+class $AssetsProfileGen {
+  const $AssetsProfileGen();
+
+  /// File path: assets/profile/add_user_icon.svg
+  SvgGenImage get addUserIcon =>
+      const SvgGenImage('assets/profile/add_user_icon.svg');
+
+  /// File path: assets/profile/comment_icon.svg
+  SvgGenImage get commentIcon =>
+      const SvgGenImage('assets/profile/comment_icon.svg');
+
+  /// File path: assets/profile/credit_card_icon.svg
+  SvgGenImage get creditCardIcon =>
+      const SvgGenImage('assets/profile/credit_card_icon.svg');
+
+  /// File path: assets/profile/edit_icon.svg
+  SvgGenImage get editIcon => const SvgGenImage('assets/profile/edit_icon.svg');
+
+  /// File path: assets/profile/heart_icon.svg
+  SvgGenImage get heartIcon =>
+      const SvgGenImage('assets/profile/heart_icon.svg');
+
+  /// File path: assets/profile/lang_icon.svg
+  SvgGenImage get langIcon => const SvgGenImage('assets/profile/lang_icon.svg');
+
+  /// File path: assets/profile/logout_icon.svg
+  SvgGenImage get logoutIcon =>
+      const SvgGenImage('assets/profile/logout_icon.svg');
+
+  /// File path: assets/profile/map_icon.svg
+  SvgGenImage get mapIcon => const SvgGenImage('assets/profile/map_icon.svg');
+
+  /// File path: assets/profile/question_icon.svg
+  SvgGenImage get questionIcon =>
+      const SvgGenImage('assets/profile/question_icon.svg');
+
+  /// List of all assets
+  List<SvgGenImage> get values => [
+        addUserIcon,
+        commentIcon,
+        creditCardIcon,
+        editIcon,
+        heartIcon,
+        langIcon,
+        logoutIcon,
+        mapIcon,
+        questionIcon
+      ];
+}
+
+class $AssetsStatusGen {
+  const $AssetsStatusGen();
+
+  /// File path: assets/status/icon_status_cancel.png
+  AssetGenImage get iconStatusCancel =>
+      const AssetGenImage('assets/status/icon_status_cancel.png');
+
+  /// File path: assets/status/icon_status_done.png
+  AssetGenImage get iconStatusDone =>
+      const AssetGenImage('assets/status/icon_status_done.png');
+
+  /// File path: assets/status/icon_status_system.png
+  AssetGenImage get iconStatusSystem =>
+      const AssetGenImage('assets/status/icon_status_system.png');
+
+  /// File path: assets/status/icon_status_wait.png
+  AssetGenImage get iconStatusWait =>
+      const AssetGenImage('assets/status/icon_status_wait.png');
+
+  /// File path: assets/status/icon_status_wait_pay.png
+  AssetGenImage get iconStatusWaitPay =>
+      const AssetGenImage('assets/status/icon_status_wait_pay.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [
+        iconStatusCancel,
+        iconStatusDone,
+        iconStatusSystem,
+        iconStatusWait,
+        iconStatusWaitPay
+      ];
+}
+
 class MyAssets {
   MyAssets._();
 
-  static const SvgGenImage booking = SvgGenImage('assets/booking.svg');
-  static const SvgGenImage home = SvgGenImage('assets/home.svg');
-  static const SvgGenImage inbox = SvgGenImage('assets/inbox.svg');
-  static const SvgGenImage profile = SvgGenImage('assets/profile.svg');
+  static const SvgGenImage bookingIcon = SvgGenImage('assets/booking_icon.svg');
+  static const $AssetsCategoryGen category = $AssetsCategoryGen();
+  static const SvgGenImage homeIcon = SvgGenImage('assets/home_icon.svg');
+  static const SvgGenImage inboxIcon = SvgGenImage('assets/inbox_icon.svg');
+  static const $AssetsProfileGen profile = $AssetsProfileGen();
+  static const AssetGenImage profileBg = AssetGenImage('assets/profile_bg.png');
+  static const SvgGenImage profileIcon = SvgGenImage('assets/profile_icon.svg');
   static const AssetGenImage splashLogo =
       AssetGenImage('assets/splash_logo.png');
+  static const $AssetsStatusGen status = $AssetsStatusGen();
 
   /// List of all assets
   static List<dynamic> get values =>
-      [booking, home, inbox, profile, splashLogo];
+      [bookingIcon, homeIcon, inboxIcon, profileBg, profileIcon, splashLogo];
 }
 
 class AssetGenImage {

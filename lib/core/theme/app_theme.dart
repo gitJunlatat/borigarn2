@@ -63,18 +63,18 @@ class AppTheme {
   }
 
   static final lightAppColors = AppColorsExtension(
-    primary: const Color(0xFF009ACD),
+    primary: const Color(0xFF07BEF2),
     subPrimary: const Color(0xFF5FBDED),
     secondary: const Color(0xFF4E54A3),
     subSecondary: const Color(0xFF8387BF),
-    title: const Color(0xFF000000),
-    subTitle: const Color(0xFF7B7873),
+    title: const Color(0xFF333333),
+    subTitle: const Color(0xFF838282),
     secondaryText: const Color(0xFFBCBAB7),
     disableText: const Color(0xFFDCDBD9),
     border: const Color(0xFFECECEC),
     divider: const Color(0xFFF5F5F5),
     backgroundText: const Color(0xFFF5F8F9),
-    error1: const Color(0xFFE14942),
+    error1: const Color(0xFFF4594D),
     error2: const Color(0xFFF6736D),
     inProgress1: const Color(0xFF008DFF),
     inProgress2: const Color(0xFFABDCF5),

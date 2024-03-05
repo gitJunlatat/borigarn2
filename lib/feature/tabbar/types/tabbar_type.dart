@@ -43,40 +43,29 @@ extension TabBarTypeExtension on TabBarType {
     colorFilter = ColorFilter.mode(isCurrentIndex ? rootContext()!.appColors.primary : rootContext()!.appColors.grey500, BlendMode.srcIn);
     color = isCurrentIndex ? rootContext()!.appColors.primary : rootContext()!.appColors.grey500;
 
-    // if (!isIgnoreColorFill()) {
-    //   colorFilter = ColorFilter.mode(isCurrentIndex ? rootContext()!.appColors.primary : rootContext()!.appColors.grey500, BlendMode.srcIn);
-    //   color = isCurrentIndex ? rootContext()!.appColors.primary : rootContext()!.appColors.grey500;
-    // }
     switch (this) {
       case TabBarType.home:
-        return MyAssets.home.svg(
+        return MyAssets.homeIcon.svg(
           height: 24,
           colorFilter: colorFilter,
         );
       case TabBarType.booking:
-        return MyAssets.booking.svg(
+        return MyAssets.bookingIcon.svg(
           height: 24,
           colorFilter: colorFilter,
         );
       case TabBarType.inbox:
-        return Icon(
-          Icons.shopping_basket_outlined,
-          size: 24,
-          color: color,
+        return MyAssets.inboxIcon.svg(
+          height: 24,
+          colorFilter: colorFilter,
         );
       case TabBarType.profile:
-        return MyAssets.profile.svg(
+        return MyAssets.profileIcon.svg(
           height: 24,
           colorFilter: colorFilter,
         );
     }
   }
-
-  // bool isIgnoreColorFill() {
-  //   switch (this) {
-  //       return false;
-  //   }
-  // }
 
   Widget getScreen() {
     switch (this) {
@@ -90,18 +79,4 @@ extension TabBarTypeExtension on TabBarType {
         return const ProfileScreen();
     }
   }
-
-
-  // Key getKey() {
-  //   switch (this) {
-  //     case TabBarType.home:
-  //       return WidgetKeys.homeTabBar;
-  //     case TabBarType.pinToShare:
-  //       return WidgetKeys.pinToShareTabBar;
-  //     case TabBarType.cart:
-  //       return WidgetKeys.cartTabBar;
-  //     case TabBarType.profile:
-  //       return WidgetKeys.profileTabBar;
-  //   }
-  // }
 }

@@ -50,7 +50,7 @@ final router = GoRouter(
             GoRoute(
               path: '/home',
               name: 'home',
-              builder: (context, state) => const HomeScreen(),
+              builder: (context, state) => const AppAnnotatedRegion.dark(child: HomeScreen()),
               routes: [
 
               ],
