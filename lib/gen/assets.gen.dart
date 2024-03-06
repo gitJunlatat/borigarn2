@@ -11,6 +11,21 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/services.dart';
 
+class $AssetsBookingGen {
+  const $AssetsBookingGen();
+
+  /// File path: assets/booking/calendar_icon.svg
+  SvgGenImage get calendarIcon =>
+      const SvgGenImage('assets/booking/calendar_icon.svg');
+
+  /// File path: assets/booking/location_icon.svg
+  SvgGenImage get locationIcon =>
+      const SvgGenImage('assets/booking/location_icon.svg');
+
+  /// List of all assets
+  List<SvgGenImage> get values => [calendarIcon, locationIcon];
+}
+
 class $AssetsCategoryGen {
   const $AssetsCategoryGen();
 
@@ -57,6 +72,16 @@ class $AssetsCategoryGen {
         service7RealPic,
         service8RealPic
       ];
+}
+
+class $AssetsLocalGen {
+  const $AssetsLocalGen();
+
+  /// File path: assets/local/service.json
+  String get service => 'assets/local/service.json';
+
+  /// List of all assets
+  List<String> get values => [service];
 }
 
 class $AssetsProfileGen {
@@ -145,10 +170,15 @@ class $AssetsStatusGen {
 class MyAssets {
   MyAssets._();
 
+  static const $AssetsBookingGen booking = $AssetsBookingGen();
   static const SvgGenImage bookingIcon = SvgGenImage('assets/booking_icon.svg');
   static const $AssetsCategoryGen category = $AssetsCategoryGen();
   static const SvgGenImage homeIcon = SvgGenImage('assets/home_icon.svg');
   static const SvgGenImage inboxIcon = SvgGenImage('assets/inbox_icon.svg');
+  static const $AssetsLocalGen local = $AssetsLocalGen();
+  static const AssetGenImage logoSecond =
+      AssetGenImage('assets/logo_second.png');
+  static const SvgGenImage navBack = SvgGenImage('assets/nav_back.svg');
   static const $AssetsProfileGen profile = $AssetsProfileGen();
   static const AssetGenImage profileBg = AssetGenImage('assets/profile_bg.png');
   static const SvgGenImage profileIcon = SvgGenImage('assets/profile_icon.svg');
@@ -157,8 +187,16 @@ class MyAssets {
   static const $AssetsStatusGen status = $AssetsStatusGen();
 
   /// List of all assets
-  static List<dynamic> get values =>
-      [bookingIcon, homeIcon, inboxIcon, profileBg, profileIcon, splashLogo];
+  static List<dynamic> get values => [
+        bookingIcon,
+        homeIcon,
+        inboxIcon,
+        logoSecond,
+        navBack,
+        profileBg,
+        profileIcon,
+        splashLogo
+      ];
 }
 
 class AssetGenImage {

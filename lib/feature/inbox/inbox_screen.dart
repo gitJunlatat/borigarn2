@@ -1,59 +1,87 @@
 import 'package:borigarn/core/theme/app_color_extension.dart';
 import 'package:borigarn/core/types/booking_status_type.dart';
+import 'package:borigarn/core/widgets/main_app_bar.dart';
 import 'package:borigarn/feature/inbox/state/get_inbox.dart';
+import 'package:borigarn/feature/inbox/widgets/inbox_view.dart';
+import 'package:borigarn/feature/inbox/widgets/promotion_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class InboxScreen extends ConsumerWidget {
+class InboxScreen extends HookConsumerWidget {
   const InboxScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Inbox')),
-      body: Consumer(builder: (context, ref, child) {
-        return ref.watch(getInboxProvider).when(data: (data) =>
-            ListView.builder(
-              padding: const EdgeInsets.only(top: 0),
-              itemCount: data.length,
-              itemBuilder: (BuildContext context, int index) => InkWell(
-                onTap: () {},
-                child: Container(
-                  margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFF3FAFF),
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20))
-                  ),
-                  child: Row(
-                    children: [
-                      'done'.toBookingStatusType().inboxIcon.image(width: 72.w, height: 72.h),
-                      Gap(20),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('The app has somethin', maxLines: 2, // Set the maximum number of lines
-                            overflow: TextOverflow.ellipsis, style: context.textTheme.labelLarge?.apply(color: context.appColors.title),),
-                          Gap(8),
-                          Text('12/05 54', style: context.textTheme.bodyMedium?.apply(color: context.appColors.subTitle),)
-                        ]
+    final ScrollController scrollController = useScrollController();
 
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            )
-            ,
-            error: (err, stack) => Text('error'),
-            loading: () => Text('load'));
-      }),
+    final tabController = useTabController(initialLength: 2);
+    tabController.addListener(() {
+      if (tabController.indexIsChanging) {
+        return;
+      }
+      // tabController.refreshProviderWhenTabChanged(tabController.index);
+    });
+    return Scaffold(
+      backgroundColor: context.appColors.light,
+      appBar: MainAppBar(
+        title: 'Inbox',
+        leftNavigation: const [],
+        rightNavigation: const [],
+        isCenterTitle: true,
+        isShowBorder: false,
+        callback: (type) => ({}),
+      ),      body:
+    NestedScrollView(
+      controller: scrollController,
+      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+        return [];
+      },
+      body: Column(
+        children: [
+          Container(
+            color: Colors.white,
+            height: 38,
+            child: TabBar(
+              controller: tabController,
+              labelStyle: context.textTheme.labelSmall!.apply(color: context.appColors.primary),
+              unselectedLabelStyle: context.textTheme.bodySmall!.apply(color: context.appColors.subTitle),
+              tabs: const [
+                Row(mainAxisSize: MainAxisSize.min, children: [Tab(text: 'Inbox')]),
+                Row(mainAxisSize: MainAxisSize.min, children: [Tab(text: 'Promotions')]),
+              ],
+              padding: EdgeInsets.zero,
+              labelColor: context.appColors.secondary,
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicatorWeight: 2,
+              indicatorColor: context.appColors.secondary,
+            ),
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: tabController,
+              children: const [
+                InboxView(),
+                PromotionView()
+                // InComingView(),
+                // PastView(),
+                // errorNotHaveReview(context),
+              ],
+            ),
+          ),
+        ],
+      ),
+    )
+
+
+
+
+
     );
   }
 }

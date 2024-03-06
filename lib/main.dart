@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -6,10 +8,21 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'core/prefs/prefs.dart';
 import 'core/route/app_route.dart';
 import 'core/theme/app_theme.dart';
 
 void main() {
+  mainCommon();
+  // runApp(const MyApp());
+}
+
+FutureOr<void> mainCommon() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.remove();
+  await SharedPrefs().init();
+
   runApp(
     const ProviderScope(
       // observers: [Observers()],
@@ -18,7 +31,6 @@ void main() {
       ),
     ),
   );
-  // runApp(const MyApp());
 }
 
 class MyApp extends ConsumerWidget {
@@ -26,9 +38,8 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    WidgetsFlutterBinding.ensureInitialized();
     final themeMode = ref.watch(appThemeProvider);
-    FlutterNativeSplash.remove();
+
     return ScreenUtilInit(
       designSize: const Size(360, 800),
       builder: (_,child) {

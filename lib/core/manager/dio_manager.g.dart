@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'get_inbox.dart';
+part of 'dio_manager.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getInboxHash() => r'de18907043c5e099289a094c9b8ad94a799bd8ca';
+String _$dioClientHash() => r'b353f783d4d2157d47d1971588a591c65e816192';
 
-/// See also [getInbox].
-@ProviderFor(getInbox)
-final getInboxProvider = AutoDisposeFutureProvider<List<InboxModel>>.internal(
-  getInbox,
-  name: r'getInboxProvider',
+/// See also [dioClient].
+@ProviderFor(dioClient)
+final dioClientProvider = Provider<Dio>.internal(
+  dioClient,
+  name: r'dioClientProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$getInboxHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$dioClientHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef GetInboxRef = AutoDisposeFutureProviderRef<List<InboxModel>>;
+typedef DioClientRef = ProviderRef<Dio>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

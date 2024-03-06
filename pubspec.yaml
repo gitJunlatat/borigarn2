@@ -223,6 +223,8 @@ flutter:
     - assets/profile/
     - assets/category/
     - assets/status/
+    - assets/booking/
+    - assets/local/
 
 
 targets:

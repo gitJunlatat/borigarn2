@@ -1,16 +1,79 @@
+import 'dart:ui';
+
+import 'package:borigarn/core/route/app_route.dart';
+import 'package:borigarn/core/theme/app_color_extension.dart';
 import 'package:borigarn/gen/assets.gen.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 enum BookingStatusType {
+  allComing,
+  allPast,
+
   waitingEstimate,
   waitingPayment,
   waitConfirm,
   confirmed,
   confirmedPaymentCash,
   done,
-  cancel;
+  cancel,
+  system;
+
+  String get title {
+    switch (this) {
+      case BookingStatusType.allComing:
+      case BookingStatusType.allPast:
+
+        return 'All';
+      case BookingStatusType.waitingEstimate:
+        return 'Waiting for estimate';
+      case BookingStatusType.waitingPayment:
+        return 'Waiting for payment';
+      case BookingStatusType.waitConfirm:
+        return 'Waiting for confirmed';
+      case BookingStatusType.confirmed:
+        return 'Confirmed';
+      case BookingStatusType.confirmedPaymentCash:
+        return 'Confirmed';
+      case BookingStatusType.done:
+        return 'Done';
+      case BookingStatusType.cancel:
+        return 'Cancelled';
+      case BookingStatusType.system:
+        return 'System';
+    }
+  }
+
+
+  Color get statusColor {
+    switch (this) {
+      case BookingStatusType.allComing:
+      case BookingStatusType.allPast:
+        return Colors.transparent;
+      case BookingStatusType.waitingEstimate:
+        return rootContext()!.appColors.warning1;
+      case BookingStatusType.waitingPayment:
+        return rootContext()!.appColors.warning1;
+      case BookingStatusType.waitConfirm:
+        return rootContext()!.appColors.warning1;
+      case BookingStatusType.confirmed:
+        return rootContext()!.appColors.primary;
+      case BookingStatusType.confirmedPaymentCash:
+        return rootContext()!.appColors.primary;
+      case BookingStatusType.done:
+        return rootContext()!.appColors.success1;
+      case BookingStatusType.cancel:
+        return rootContext()!.appColors.error1;
+      case BookingStatusType.system:
+        return rootContext()!.appColors.primary;
+    }
+  }
 
   AssetGenImage get inboxIcon {
     switch (this) {
+      case BookingStatusType.allComing:
+      case BookingStatusType.allPast:
+        return MyAssets.status.iconStatusWait;
       case BookingStatusType.waitingEstimate:
         return MyAssets.status.iconStatusWait;
       case BookingStatusType.waitingPayment:
@@ -25,7 +88,47 @@ enum BookingStatusType {
         return MyAssets.status.iconStatusDone;
       case BookingStatusType.cancel:
         return MyAssets.status.iconStatusCancel;
+      case BookingStatusType.system:
+        return MyAssets.status.iconStatusSystem;
+    }
+  }
 
+  String get queryStatus {
+    switch (this) {
+      case BookingStatusType.waitingEstimate:
+        return 'waiting_estimate';
+      case BookingStatusType.waitingPayment:
+        return 'waiting_payment';
+      case BookingStatusType.waitConfirm:
+        return 'wait_confirm';
+      case BookingStatusType.confirmed:
+        return 'confirmed';
+      case BookingStatusType.confirmedPaymentCash:
+        return 'confirmed_payment_cash';
+      case BookingStatusType.done:
+        return 'done';
+      case BookingStatusType.cancel:
+        return 'cancelled';
+      default:
+        return '';
+    }
+  }
+
+  String get titleStatus {
+    switch (this) {
+      case BookingStatusType.waitingEstimate:
+      case BookingStatusType.waitingPayment:
+      case BookingStatusType.waitConfirm:
+        return 'Waiting';
+      case BookingStatusType.confirmed:
+      case BookingStatusType.confirmedPaymentCash:
+        return 'Confirmed';
+      case BookingStatusType.done:
+        return 'Done';
+      case BookingStatusType.cancel:
+        return 'Cancelled';
+      default:
+        return '';
     }
   }
 }
@@ -34,7 +137,7 @@ extension BookingStatusTypeExtension on String {
   BookingStatusType toBookingStatusType() {
     switch (this) {
       case 'confirmed':
-         return BookingStatusType.confirmed;
+        return BookingStatusType.confirmed;
       case 'confirmed_payment_cash':
         return BookingStatusType.confirmedPaymentCash;
       case 'waiting_estimate':
@@ -48,11 +151,10 @@ extension BookingStatusTypeExtension on String {
       case 'cancelled':
         return BookingStatusType.cancel;
       default:
-        throw Error();
+        return BookingStatusType.system;
     }
   }
 }
-
 
 // case 'confirmed':
 // image = require('../../../../assets/icon_status_done.png');
