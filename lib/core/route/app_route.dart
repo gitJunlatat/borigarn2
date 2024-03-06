@@ -1,6 +1,9 @@
 import 'package:borigarn/core/theme/app_annotated_region.dart';
 import 'package:borigarn/feature/authen/login_screen.dart';
-import 'package:borigarn/feature/booking/booking_screen.dart';
+import 'package:borigarn/feature/booking/model/booking_model.dart';
+import 'package:borigarn/feature/booking/views/booking_detail_screen.dart';
+import 'package:borigarn/feature/booking/views/booking_screen.dart';
+import 'package:borigarn/feature/booking/views/review_screen.dart';
 import 'package:borigarn/feature/home/home_screen.dart';
 import 'package:borigarn/feature/inbox/inbox_screen.dart';
 import 'package:borigarn/feature/profile/profile_screen.dart';
@@ -8,6 +11,8 @@ import 'package:borigarn/feature/tabbar/tabbar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../feature/booking/views/review_success_screen.dart';
 
 part 'app_route.g.dart';
 
@@ -62,6 +67,36 @@ final router = GoRouter(
             GoRoute(
               path: '/booking',
               builder: (context, state) => const AppAnnotatedRegion.dark(child: BookingScreen()),
+              routes: [
+                GoRoute(
+                  name: 'booking_detail',
+                  path: 'booking_detail',
+                  parentNavigatorKey: rootNavigation,
+                  builder: (context, state) {
+                    final model = state.extra as BookingModel;
+                    return BookingDetailScreen(model: model);
+                  },
+                ),
+                GoRoute(
+                  name: 'review',
+                  path: 'review',
+                  parentNavigatorKey: rootNavigation,
+                  builder: (context, state) {
+                    return const ReviewScreen();
+                  },
+                ),
+
+                GoRoute(
+                  name: 'review_success',
+                  path: 'review_success',
+                  parentNavigatorKey: rootNavigation,
+                  builder: (context, state) {
+                    final rating = state.extra as double;
+                    return  ReviewSuccessScreen(rating: rating);
+                  },
+                ),
+
+              ]
             ),
           ],
         ),
@@ -93,15 +128,7 @@ final router = GoRouter(
         return const AppAnnotatedRegion.dark(child: LoginScreen());
       },
       // routes: [
-      //   GoRoute(
-      //     name: 'auth-phone-number',
-      //     path: 'phone-number',
-      //     parentNavigatorKey: rootNavigation,
-      //     builder: (context, state) {
-      //       final type = (state.uri.queryParameters['type'] ?? "").getAuthenticationOtpType();
-      //       return AuthenticationPreOtpScreen(authenticationOTPType: type);
-      //     },
-      //   ),
+
       //   GoRoute(
       //     name: 'auth-password-form',
       //     path: 'password-form',

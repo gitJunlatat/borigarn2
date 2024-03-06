@@ -8,7 +8,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../core/widgets/main_app_bar.dart';
+import '../../../core/widgets/main_app_bar.dart';
 
 class BookingScreen extends HookConsumerWidget {
   const BookingScreen({super.key});

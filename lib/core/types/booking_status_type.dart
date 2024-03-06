@@ -19,11 +19,41 @@ enum BookingStatusType {
   cancel,
   system;
 
+  bool get isPast {
+    switch(this) {
+      case BookingStatusType.done:
+      case BookingStatusType.cancel:
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  String get buttonTitle {
+    switch (this) {
+      case BookingStatusType.allComing:
+      case BookingStatusType.allPast:
+        return 'All';
+      case BookingStatusType.confirmed:
+      case BookingStatusType.confirmedPaymentCash:
+      case BookingStatusType.waitingEstimate:
+      case BookingStatusType.waitConfirm:
+        return 'View';
+      case BookingStatusType.waitingPayment:
+        return 'Pay';
+      case BookingStatusType.done:
+        return 'Done';
+      case BookingStatusType.cancel:
+        return 'Cancelled';
+      case BookingStatusType.system:
+        return 'System';
+    }
+  }
+
   String get title {
     switch (this) {
       case BookingStatusType.allComing:
       case BookingStatusType.allPast:
-
         return 'All';
       case BookingStatusType.waitingEstimate:
         return 'Waiting for estimate';

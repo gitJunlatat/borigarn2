@@ -11,8 +11,6 @@ import 'package:material_symbols_icons/symbols.dart';
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
-
-
   @override
   Widget build(BuildContext context) {
     final menu = [
@@ -27,7 +25,6 @@ class ProfileScreen extends StatelessWidget {
       SettingMenuType.paymentAndRefund,
       SettingMenuType.deleteUser,
       SettingMenuType.logout,
-
     ];
 
     return Scaffold(
@@ -35,6 +32,7 @@ class ProfileScreen extends StatelessWidget {
       body: RefreshIndicator(
         onRefresh: () async => ({}),
         child: Container(
+          color: Colors.white,
           // decoration: BoxDecoration(
           //   color: context.appColors.light,
           //   borderRadius: const BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),

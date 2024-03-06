@@ -1,7 +1,7 @@
 
 import 'package:borigarn/core/route/app_route.dart';
 import 'package:borigarn/core/theme/app_color_extension.dart';
-import 'package:borigarn/feature/booking/booking_screen.dart';
+import 'package:borigarn/feature/booking/views/booking_screen.dart';
 import 'package:borigarn/feature/home/home_screen.dart';
 import 'package:borigarn/feature/inbox/inbox_screen.dart';
 import 'package:borigarn/feature/profile/profile_screen.dart';
@@ -14,13 +14,13 @@ extension TabBarTypeExtension on TabBarType {
   String getName() {
     switch (this) {
       case TabBarType.home:
-        return 'home';
+        return 'Home';
       case TabBarType.booking:
-        return 'booking';
+        return 'Booking';
       case TabBarType.inbox:
-        return 'inbox';
+        return 'Inbox';
       case TabBarType.profile:
-        return 'profile';
+        return 'Profile';
     }
   }
 

@@ -172,6 +172,7 @@ class MyAssets {
 
   static const $AssetsBookingGen booking = $AssetsBookingGen();
   static const SvgGenImage bookingIcon = SvgGenImage('assets/booking_icon.svg');
+  static const SvgGenImage cancelIcon = SvgGenImage('assets/cancel_icon.svg');
   static const $AssetsCategoryGen category = $AssetsCategoryGen();
   static const SvgGenImage homeIcon = SvgGenImage('assets/home_icon.svg');
   static const SvgGenImage inboxIcon = SvgGenImage('assets/inbox_icon.svg');
@@ -182,6 +183,8 @@ class MyAssets {
   static const $AssetsProfileGen profile = $AssetsProfileGen();
   static const AssetGenImage profileBg = AssetGenImage('assets/profile_bg.png');
   static const SvgGenImage profileIcon = SvgGenImage('assets/profile_icon.svg');
+  static const AssetGenImage reviewImage =
+      AssetGenImage('assets/review_image.png');
   static const AssetGenImage splashLogo =
       AssetGenImage('assets/splash_logo.png');
   static const $AssetsStatusGen status = $AssetsStatusGen();
@@ -189,12 +192,14 @@ class MyAssets {
   /// List of all assets
   static List<dynamic> get values => [
         bookingIcon,
+        cancelIcon,
         homeIcon,
         inboxIcon,
         logoSecond,
         navBack,
         profileBg,
         profileIcon,
+        reviewImage,
         splashLogo
       ];
 }
