@@ -120,6 +120,8 @@ dependencies:
   material_design_icons_flutter: 7.0.7296
   flutter_screenutil: ^5.9.0
   readmore: ^2.2.0
+  google_sign_in: ^6.2.1
+  flutter_social_button: ^1.1.4+1
   #  appcenter: ^0.2.1
   #  appcenter_analytics: ^0.2.1
   #  appcenter_crashes: ^0.2.1

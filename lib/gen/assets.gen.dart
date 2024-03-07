@@ -170,10 +170,14 @@ class $AssetsStatusGen {
 class MyAssets {
   MyAssets._();
 
+  static const SvgGenImage appleIcon = SvgGenImage('assets/apple_icon.svg');
   static const $AssetsBookingGen booking = $AssetsBookingGen();
   static const SvgGenImage bookingIcon = SvgGenImage('assets/booking_icon.svg');
   static const SvgGenImage cancelIcon = SvgGenImage('assets/cancel_icon.svg');
   static const $AssetsCategoryGen category = $AssetsCategoryGen();
+  static const SvgGenImage facebookIcon =
+      SvgGenImage('assets/facebook_icon.svg');
+  static const SvgGenImage googleIcon = SvgGenImage('assets/google_icon.svg');
   static const SvgGenImage homeIcon = SvgGenImage('assets/home_icon.svg');
   static const SvgGenImage inboxIcon = SvgGenImage('assets/inbox_icon.svg');
   static const $AssetsLocalGen local = $AssetsLocalGen();
@@ -191,8 +195,11 @@ class MyAssets {
 
   /// List of all assets
   static List<dynamic> get values => [
+        appleIcon,
         bookingIcon,
         cancelIcon,
+        facebookIcon,
+        googleIcon,
         homeIcon,
         inboxIcon,
         logoSecond,
