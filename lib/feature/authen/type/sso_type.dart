@@ -24,7 +24,7 @@ enum SSOType {
       case SSOType.facebook:
         return MyAssets.facebookIcon;
       case SSOType.apple:
-        return MyAssets.facebookIcon;
+        return MyAssets.appleIcon;
     }
   }
 }

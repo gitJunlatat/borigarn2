@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../route/app_route.dart';
 
 enum ActionNavigationType {
-  ptsIcon, navigationBack, searchIcon, inactiveDelete, activeDelete, loading, booking
+  ptsIcon, navigationBack, searchIcon, inactiveDelete, activeDelete, loading, booking, close, info
 }
 
 extension AppNavigationTypeExtension on ActionNavigationType {
@@ -27,6 +27,10 @@ extension AppNavigationTypeExtension on ActionNavigationType {
         );
       case ActionNavigationType.booking:
         return MyAssets.booking.calendarIcon.svg(width: 26, height: 26);
+      case ActionNavigationType.close:
+        return MyAssets.closeIcon.svg(width: 26, height: 26);
+      case ActionNavigationType.info:
+        return MyAssets.infoIcon.svg(width: 26, height: 26);
       default:
         final xxx = MyAssets.navBack.svg(width: 26, height: 26);
         return Icon(xxx as IconData?);

@@ -1,3 +1,5 @@
+import 'package:borigarn/core/route/app_route.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -95,3 +97,68 @@ class DateAction {
     return '';
   }
 }
+
+
+double adjustheight(double height) => heightRatio * height;
+double adjustwidth(double width) => widthRatio * width;
+double adjustHeightV2(double height) => (heightRatio * height) > height ? height : heightRatio * height;
+double adjustWidthV2(double width) => (widthRatio * width) > width ? width : widthRatio * width;
+double adjustMinHeight(double height) => (heightRatio * height) < height ? height : heightRatio * height;
+double adjustMinWidth(double width) => (widthRatio * width) < width ? width : widthRatio * width;
+Size size = GetSize.deviceSize();
+double height = GetSize.height();
+double width = GetSize.width();
+double heightRatio = GetSize.heightRatio();
+double widthRatio = GetSize.widthRatio();
+double statusBarHeight = GetSize.statusBarHeight();
+
+class GetSize {
+  static Size deviceSize() {
+    return (View.of(rootContext()!).physicalSize / View.of(rootContext()!).devicePixelRatio);
+  }
+
+  static double height() {
+    return (View.of(rootContext()!).physicalSize.height / View.of(rootContext()!).devicePixelRatio);
+  }
+
+  static double width() {
+    return (View.of(rootContext()!).physicalSize.width / View.of(rootContext()!).devicePixelRatio);
+  }
+
+  static double heightRatio() {
+    return height() / 800; // in Design height
+  }
+
+  static double widthRatio() {
+    return width() / 360; // in Design width
+  }
+
+  static double statusBarHeight() {
+    return View.of(rootContext()!).viewPadding.top / View.of(rootContext()!).devicePixelRatio;
+  }
+}
+
+class SizeConfig {
+  static MediaQueryData? _mediaQueryData;
+  static double? screenWidth;
+  static double? screenHeight;
+  static double? blockSizeHorizontal;
+  static double? blockSizeVertical;
+
+  void init(BuildContext context) {
+    _mediaQueryData = MediaQuery.of(context);
+    screenWidth = _mediaQueryData?.size.width;
+    screenHeight = _mediaQueryData?.size.height;
+    blockSizeHorizontal = screenWidth! / 100;
+    blockSizeVertical = screenHeight! / 100;
+  }
+}
+
+class SizeNotifier extends ChangeNotifier {
+  double bottomPaddingHeight = 0;
+  void getBottomPaddingHeight(double bottomHeight) {
+    bottomPaddingHeight = bottomHeight;
+    notifyListeners();
+  }
+}
+

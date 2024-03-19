@@ -4,7 +4,6 @@ import 'package:borigarn/core/route/app_route.dart';
 import 'package:borigarn/core/theme/app_color_extension.dart';
 import 'package:borigarn/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 enum BookingStatusType {
   allComing,

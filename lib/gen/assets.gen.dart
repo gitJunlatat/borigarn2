@@ -170,20 +170,30 @@ class $AssetsStatusGen {
 class MyAssets {
   MyAssets._();
 
+  static const AssetGenImage addLocation =
+      AssetGenImage('assets/add_location.png');
   static const SvgGenImage appleIcon = SvgGenImage('assets/apple_icon.svg');
   static const $AssetsBookingGen booking = $AssetsBookingGen();
   static const SvgGenImage bookingIcon = SvgGenImage('assets/booking_icon.svg');
   static const SvgGenImage cancelIcon = SvgGenImage('assets/cancel_icon.svg');
   static const $AssetsCategoryGen category = $AssetsCategoryGen();
+  static const SvgGenImage checkIcon = SvgGenImage('assets/check_icon.svg');
+  static const SvgGenImage closeIcon = SvgGenImage('assets/close_icon.svg');
+  static const SvgGenImage editIcon = SvgGenImage('assets/edit_icon.svg');
   static const SvgGenImage facebookIcon =
       SvgGenImage('assets/facebook_icon.svg');
   static const SvgGenImage googleIcon = SvgGenImage('assets/google_icon.svg');
   static const SvgGenImage homeIcon = SvgGenImage('assets/home_icon.svg');
+  static const SvgGenImage iconMail = SvgGenImage('assets/icon_mail.svg');
+  static const SvgGenImage iconPhone = SvgGenImage('assets/icon_phone.svg');
+  static const SvgGenImage iconUser = SvgGenImage('assets/icon_user.svg');
   static const SvgGenImage inboxIcon = SvgGenImage('assets/inbox_icon.svg');
+  static const SvgGenImage infoIcon = SvgGenImage('assets/info_icon.svg');
   static const $AssetsLocalGen local = $AssetsLocalGen();
   static const AssetGenImage logoSecond =
       AssetGenImage('assets/logo_second.png');
   static const SvgGenImage navBack = SvgGenImage('assets/nav_back.svg');
+  static const SvgGenImage phoneIcon = SvgGenImage('assets/phone_icon.svg');
   static const $AssetsProfileGen profile = $AssetsProfileGen();
   static const AssetGenImage profileBg = AssetGenImage('assets/profile_bg.png');
   static const SvgGenImage profileIcon = SvgGenImage('assets/profile_icon.svg');
@@ -195,15 +205,24 @@ class MyAssets {
 
   /// List of all assets
   static List<dynamic> get values => [
+        addLocation,
         appleIcon,
         bookingIcon,
         cancelIcon,
+        checkIcon,
+        closeIcon,
+        editIcon,
         facebookIcon,
         googleIcon,
         homeIcon,
+        iconMail,
+        iconPhone,
+        iconUser,
         inboxIcon,
+        infoIcon,
         logoSecond,
         navBack,
+        phoneIcon,
         profileBg,
         profileIcon,
         reviewImage,

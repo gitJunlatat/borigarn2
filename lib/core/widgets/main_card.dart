@@ -14,6 +14,7 @@ class MainCard extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
+        color: background,
         border: Border.all(color: borderColor, width: 1),
         borderRadius: BorderRadius.only(topRight: Radius.circular(radius), bottomLeft: Radius.circular(radius), bottomRight: Radius.circular(radius))
       ),

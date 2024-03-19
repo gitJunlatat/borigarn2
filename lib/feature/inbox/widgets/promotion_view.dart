@@ -6,6 +6,6 @@ class PromotionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return EmptyView();
+    return const EmptyView();
   }
 }

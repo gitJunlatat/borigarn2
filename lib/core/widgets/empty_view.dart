@@ -9,14 +9,14 @@ class EmptyView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(30),
+      padding: const EdgeInsets.all(50),
       child: Container(
-        width: 120.w, height: 120.h,
+        width: 100.w, height: 100.h,
         decoration: BoxDecoration(
             color: context.appColors.secondaryText,
             shape: BoxShape.circle
         ),
-        child: Padding(padding: const EdgeInsets.all(10), child: MyAssets.logoSecond.image(width: 120.w, height: 120.h)),
+        child: Padding(padding: const EdgeInsets.all(10), child: MyAssets.logoSecond.image(width: 100.w, height: 100.h)),
       ),
     );
   }

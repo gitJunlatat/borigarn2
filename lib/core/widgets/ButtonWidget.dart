@@ -25,7 +25,7 @@ class ButtonWidget extends StatelessWidget {
     super.key,
     this.backgroundColor,
     this.width,
-    this.height,
+    this.height = 50,
     this.borderColor,
     this.text,
     this.child,

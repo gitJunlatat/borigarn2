@@ -64,7 +64,7 @@ class AppTheme {
 
   static final lightAppColors = AppColorsExtension(
     primary: const Color(0xFF07BEF2),
-    subPrimary: const Color(0xFF5FBDED),
+    subPrimary: const Color(0xFF1E79B5),
     secondary: const Color(0xFF1E79B5),
     subSecondary: const Color(0xFF8387BF),
     title: const Color(0xFF333333),
@@ -116,7 +116,7 @@ class AppTheme {
 
   static final darkAppColors = AppColorsExtension(
     primary: const Color(0xFF07BEF2),
-    subPrimary: const Color(0xFF5FBDED),
+    subPrimary: const Color(0xFF1E79B5),
     secondary: const Color(0xFF1E79B5),
     subSecondary: const Color(0xFF8387BF),
     title: const Color(0xFF333333),

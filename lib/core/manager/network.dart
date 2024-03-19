@@ -1,8 +1,13 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:logger/logger.dart';
 import 'package:dio/dio.dart';
 
 import 'dio_manager.dart';
+import 'dart:developer';
+import 'dart:convert';
 
 part 'network.g.dart';
 
@@ -32,9 +37,10 @@ class NetworkManager {
         queryParameters: queryParameters,
         data: data,
       );
-      log.d(response);
 
       final responseData = onlyData ? response.data["data"] : response.data;
+      print('\n\n\nPATHsdsd: $path \n ------ \n');
+      printWrapped('$response');
       return rawResponse
           ? response
           : fromJson != null
@@ -48,10 +54,11 @@ class NetworkManager {
   Future<T> post<T>(
       String path, {
         Map<String, dynamic>? queryParameters,
-        required Function fromJson,
+        Function? fromJson,
         required String appBaseUrl,
         Object? data,
         bool onlyData = false,
+        bool rawResponse = false,
       }) async {
     try {
       final response = await _dio.post(
@@ -59,9 +66,19 @@ class NetworkManager {
         queryParameters: queryParameters,
         data: data,
       );
+
+      print('\n\n\nPATH: $path \n ------ \n');
+      printWrapped('$response');
+
       final responseData = onlyData ? response.data["data"] : response.data;
-      log.d('path ${path} \n response ${responseData}');
-      return fromJson(responseData);
+      log.e(path);
+      log.e(response);
+      return rawResponse
+          ? response
+          : fromJson != null
+          ? fromJson(responseData)
+          : responseData;
+
     } catch (e) {
       throw _handleError(e, appBaseUrl, path);
     }
@@ -70,10 +87,11 @@ class NetworkManager {
   Future<T> patch<T>(
       String path, {
         Map<String, dynamic>? queryParameters,
-        required Function fromJson,
+        Function? fromJson,
         required String appBaseUrl,
         Object? data,
         bool onlyData = false,
+        bool rawResponse = false,
       }) async {
     try {
       final response = await _dio.patch(
@@ -82,7 +100,12 @@ class NetworkManager {
         data: data,
       );
       final responseData = onlyData ? response.data["data"] : response.data;
-      return fromJson(responseData);
+      return rawResponse
+          ? response
+          : fromJson != null
+          ? fromJson(responseData)
+          : responseData;
+
     } catch (e) {
       throw _handleError(e, appBaseUrl, path);
     }
@@ -91,10 +114,12 @@ class NetworkManager {
   Future<T> put<T>(
       String path, {
         Map<String, dynamic>? queryParameters,
-        required Function fromJson,
+        Function? fromJson,
         required String appBaseUrl,
         Object? data,
         bool onlyData = false,
+        bool rawResponse = false,
+
       }) async {
     try {
       final response = await _dio.put(
@@ -103,7 +128,11 @@ class NetworkManager {
         data: data,
       );
       final responseData = onlyData ? response.data["data"] : response.data;
-      return fromJson(responseData);
+      return rawResponse
+          ? response
+          : fromJson != null
+          ? fromJson(responseData)
+          : responseData;
     } catch (e) {
       throw _handleError(e, appBaseUrl, path);
     }
@@ -179,3 +208,9 @@ var logs = Logger(
 var log = Logger(
   printer: PrettyPrinter(methodCount: 0),
 );
+
+
+void printWrapped(String text) {
+  final pattern = new RegExp('.{1,800}'); // 800 is the size of each chunk
+  pattern.allMatches(text).forEach((match) => print(match.group(0)));
+}

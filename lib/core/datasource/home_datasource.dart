@@ -28,6 +28,7 @@ class HomeDatasourceImpl implements HomeDatasource {
   HomeDatasourceImpl(this.networkManager);
 
   final String appBaseUrl = CAMPAIGN_BASE_URL;
+  final String serviceBaseUrl = SERVICE_BASE_URL;
 
   @override
   Future<List<CampaignModel>> getCampaign() async {
@@ -40,11 +41,17 @@ class HomeDatasourceImpl implements HomeDatasource {
 
   @override
   Future<List<Service>> getServices() async {
-      var data = await rootBundle.loadString("assets/local/service.json");
-      final listData = jsonDecode(data)['items'] as List;
-      final  List<Service> asas =  listData.map((e) => Service.fromJson(e)).toList();
-      log.e(asas);
-      return asas;
+    final response = await networkManager.get('/passport/service/list',
+        appBaseUrl: serviceBaseUrl,
+        onlyData: false);
+    final listData = response['items'] as List;
+    return listData.map((e) => Service.fromJson(e)).toList();
+    //
+    //   var data = await rootBundle.loadString("assets/local/service.json");
+    //   final listData = jsonDecode(data)['items'] as List;
+    //   final  List<Service> asas =  listData.map((e) => Service.fromJson(e)).toList();
+    //   log.e(asas);
+    //   return asas;
     }
 
 }

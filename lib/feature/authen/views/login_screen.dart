@@ -1,20 +1,22 @@
+import 'package:borigarn/core/manager/network.dart';
 import 'package:borigarn/core/theme/app_color_extension.dart';
 import 'package:borigarn/core/widgets/ButtonWidget.dart';
-import 'package:borigarn/feature/authen/type/LoginFormType.dart';
+import 'package:borigarn/feature/authen/type/authen_flow_type.dart';
+import 'package:borigarn/feature/authen/type/login_form_type.dart';
 import 'package:borigarn/feature/authen/type/sso_type.dart';
 import 'package:borigarn/feature/authen/widgets/login_text_field.dart';
-import 'package:borigarn/feature/authen/widgets/main_appbar.dart';
 import 'package:borigarn/gen/assets.gen.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'controller/login_controller.dart';
+import '../controller/login_controller.dart';
 
 class LoginScreen extends HookConsumerWidget {
   const LoginScreen({super.key});
@@ -22,7 +24,7 @@ class LoginScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     const List<LoginFormType> sectionType = LoginFormType.values;
-    final controller = ref.watch(loginControllerProvider);
+    // final controller = ref.watch(loginControllerProvider);
 
     final TextEditingController usernameTextController = useTextEditingController();
     final TextEditingController passwordTextController = useTextEditingController();
@@ -33,13 +35,13 @@ class LoginScreen extends HookConsumerWidget {
       backgroundColor: context.appColors.light,
       bottomNavigationBar: Container(
         height: 70,
-        padding: EdgeInsets.only(bottom: 40),
+        padding: const EdgeInsets.only(bottom: 40),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Dont have an account ?', style: context.textTheme.bodyMedium?.apply(color: context.appColors.subTitle),),
-            Gap(4),
-            Text('Sign Up', style: context.textTheme.bodyMedium?.apply(color: context.appColors.primary),)
+            const Gap(4),
+            Text('Sign Up', style: context.textTheme.labelMedium?.apply(color: context.appColors.subPrimary),)
           ],
         ),
       ),
@@ -47,7 +49,7 @@ class LoginScreen extends HookConsumerWidget {
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 16,
+              horizontal: 40,
               vertical: 20,
             ),
             child: Column(
@@ -104,7 +106,7 @@ class LoginScreen extends HookConsumerWidget {
                         ),
                         child: Text(
                           "Remember Me",
-                          style: context.textTheme.bodySmall?.apply(color: context.appColors.primary),
+                          style: context.textTheme.labelMedium?.apply(color: context.appColors.subPrimary),
                         ),
                       ),
                     ),
@@ -124,19 +126,24 @@ class LoginScreen extends HookConsumerWidget {
                           horizontal: 7,
                           vertical: 3,
                         ),
-                        child: Row(
-                          children: [
-                            Text(
-                              "ลืมรหัสผ่าน",
-                              style: context.textTheme.bodySmall?.apply(color: context.appColors.primary),
-                            ),
-                            const Gap(4),
-                            Icon(
-                              Icons.question_mark_sharp,
-                              size: 14,
-                              color: context.appColors.primary,
-                            ),
-                          ],
+                        child: InkWell(
+                          onTap: () {
+                            context.pushNamed('request_otp', extra: AuthenticationOTPType.forgotPassword);
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                "ลืมรหัสผ่าน",
+                                style: context.textTheme.labelMedium?.apply(color: context.appColors.subPrimary),
+                              ),
+                              const Gap(4),
+                              Icon(
+                                Icons.question_mark_sharp,
+                                size: 14,
+                                color: context.appColors.subPrimary,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -176,7 +183,7 @@ class LoginScreen extends HookConsumerWidget {
                   'OR CONNECT WITH',
                   style: context.textTheme.labelSmall?.apply(color: context.appColors.secondaryText),
                 ),
-                const Gap(20),
+                const Gap(36),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -186,7 +193,9 @@ class LoginScreen extends HookConsumerWidget {
                         child: ButtonWidget(
                           height: 50,
                           radius: 12,
-                          onPressed: () {},
+                          onPressed: () {
+                            signInWithGoogle();
+                          },
                           borderColor: context.appColors.border,
                           borderWidth: 1,
                           backgroundColor: SSOType.google.background,
@@ -209,6 +218,7 @@ class LoginScreen extends HookConsumerWidget {
                           radius: 12,
                           height: 50,
                           onPressed: () {},
+                          borderWidth: 0,
                           backgroundColor: SSOType.apple.background,
                           child: SSOType.apple.icon.svg(width: 20, height: 20),
                         )),
@@ -222,5 +232,28 @@ class LoginScreen extends HookConsumerWidget {
         ),
       ),
     );
+
+  }
+
+  Future<dynamic> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+
+      final xxx =  await FirebaseAuth.instance.signInWithCredential(credential);
+
+
+      return xxx;
+
+    } on Exception catch (e) {
+      print('exception->$e');
+    }
   }
 }

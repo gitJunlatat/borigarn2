@@ -2,7 +2,7 @@
 import 'package:borigarn/core/route/app_route.dart';
 import 'package:borigarn/core/theme/app_color_extension.dart';
 import 'package:borigarn/feature/booking/views/booking_screen.dart';
-import 'package:borigarn/feature/home/home_screen.dart';
+import 'package:borigarn/feature/home/views/home_screen.dart';
 import 'package:borigarn/feature/inbox/inbox_screen.dart';
 import 'package:borigarn/feature/profile/profile_screen.dart';
 import 'package:borigarn/gen/assets.gen.dart';

@@ -1,3 +1,7 @@
+import 'package:borigarn/core/manager/network.dart';
+import 'package:borigarn/feature/home/types/select_form_type.dart';
+import 'package:borigarn/feature/home/types/service_type.dart';
+
 class Service {
   int? id;
   String? createdAt;
@@ -11,6 +15,8 @@ class Service {
   bool? isPopular;
   bool? isActive;
   String? customData;
+  String? descriptionTh;
+  String? descriptionEn;
   List<ServiceDetails>? details;
 
   Service(
@@ -26,7 +32,9 @@ class Service {
         this.isPopular,
         this.isActive,
         this.customData,
-        this.details});
+        this.details,
+      this.descriptionTh,
+      this.descriptionEn});
 
   Service.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -41,6 +49,8 @@ class Service {
     isPopular = json['isPopular'];
     isActive = json['isActive'];
     customData = json['customData'];
+    descriptionTh = json['descriptionTh'];
+    descriptionEn = json['descriptionEn'];
     if (json['details'] != null) {
       details = <ServiceDetails>[];
       json['details'].forEach((v) {
@@ -67,6 +77,10 @@ class Service {
       data['details'] = details!.map((v) => v.toJson()).toList();
     }
     return data;
+  }
+
+  ServiceType getServiceType() {
+    return id?.toServiceType() ?? ServiceType.maidService;
   }
 }
 
@@ -135,6 +149,22 @@ class ServiceDetails {
       data['items'] = items!.map((v) => v.toJson()).toList();
     }
     return data;
+  }
+
+  SelectFormType getFormType() {
+    switch(type) {
+      case 'multi_choice':
+        return  SelectFormType.multiChoice;
+      case 'choice':
+        return  SelectFormType.choice;
+      case 'text_area':
+        return SelectFormType.freeText;
+      case 'date_time':
+        return SelectFormType.dateTime;
+      default:
+        log.e(type);
+        return throw Error();
+    }
   }
 }
 

@@ -2,7 +2,6 @@ import 'package:borigarn/core/route/app_route.dart';
 import 'package:borigarn/core/theme/app_color_extension.dart';
 import 'package:borigarn/gen/assets.gen.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:material_symbols_icons/symbols.dart';
 
 enum SettingMenuType {
   editProfile,

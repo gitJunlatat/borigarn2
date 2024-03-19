@@ -62,6 +62,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
               case ActionNavigationType.inactiveDelete:
               case ActionNavigationType.searchIcon:
               case ActionNavigationType.booking:
+              case ActionNavigationType.info:
                 return IconButton(
                     icon: element.getIcon(),
                     onPressed: () {

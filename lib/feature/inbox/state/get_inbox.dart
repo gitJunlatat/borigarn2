@@ -1,6 +1,5 @@
 import 'package:borigarn/core/datasource/inbox_datasource.dart';
 import 'package:borigarn/feature/inbox/model/inbox_model.dart';
-import 'package:borigarn/feature/inbox/state/get_inbox_bottom_indicator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'get_inbox.g.dart';

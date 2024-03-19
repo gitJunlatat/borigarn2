@@ -11,12 +11,12 @@ Dio dioClient(DioClientRef ref) {
   dio.options.receiveTimeout = const Duration(seconds: 30);
 
   if (SharedPrefs().isAuthentication()) {
-    String accessToken = SharedPrefs().getToken;
-    String token = 'U2FsdGVkX183qzZeSsYk2j8J70xDKIe2Bx4p5S8+VenEtfkff0MVv7YeT/P7EoXeM53HUdRaUUHDlEEFPpAfh6eiGZsJNV9OLPRRMgkbDY9sLBhP3486RauQeK3tlz2pwb6QFnr6FFE5l1dLeVdcqLM+nS6Q0ncpM3ahz3xQ42r4gPx9en6giKtLTRn1J+ES6BYg/Je/jDhfStwguyCD/0gtyxHIg38CW1ln8nEUVEsz2rTZbLyxJfYhNrf1szpUNYAbdWyxkrsLgb91k8tk+PAHux7RW4Q+Uemh2YAlhSTD59D+ttjPFNQX7VUVWsOiv93GnDwnvWnkPWlWATwKCqQjucjZ/Q29NV6ekQMK+9QzBXAzdQKptvuT+oa3t12ckl4+gV/7nxIi0GTnEEc8LqTUCfHA54hak9OzAHaiIsSHl/NCrwHEEnl10KxeVjNy';
+    String token = 'U2FsdGVkX1/UtFP1DwPxjjmludOU38Gxftqfvo6chIdQqawjSC86Zxk34RmEFSgwD5P2uNXhkxxYX3qlgBZDrR0JnxzSn9iVysW2NyEJMiAmVS6DOZr3YR2mBYS/KM2OsDCM5ETfcy5W4uo5RcJ3+GtN1ASi2mVybC2ZTeol9/GYV+zndAMDM/xDs+53zYEPu5YHA2s7ROMhtUAZNBs4szbl3a6E3lBNOHIlHZbxhVp0clfEhlSvJGMVTCPIp/VzVjpAV/IL0aBn1LMlvrUyqoosLN6sQ8izR8PLwyF9O6TrfPRrX8XFTK1tzv2IKHNVyJVrWke2cTaIW+OEcjGAyhkazhIfi1ppOszswVfktO83uWvJMKNhIRmltPK0fJDYa7a8CvOakEJIPzZctDEt6xsza1HxrkI9YiemtCXqSYfYixeW/dER5uy9ldSNhgJB';
     dio.options.headers['Authorization'] = 'Bearer $token';
   }else {
-    String token = 'U2FsdGVkX183qzZeSsYk2j8J70xDKIe2Bx4p5S8+VenEtfkff0MVv7YeT/P7EoXeM53HUdRaUUHDlEEFPpAfh6eiGZsJNV9OLPRRMgkbDY9sLBhP3486RauQeK3tlz2pwb6QFnr6FFE5l1dLeVdcqLM+nS6Q0ncpM3ahz3xQ42r4gPx9en6giKtLTRn1J+ES6BYg/Je/jDhfStwguyCD/0gtyxHIg38CW1ln8nEUVEsz2rTZbLyxJfYhNrf1szpUNYAbdWyxkrsLgb91k8tk+PAHux7RW4Q+Uemh2YAlhSTD59D+ttjPFNQX7VUVWsOiv93GnDwnvWnkPWlWATwKCqQjucjZ/Q29NV6ekQMK+9QzBXAzdQKptvuT+oa3t12ckl4+gV/7nxIi0GTnEEc8LqTUCfHA54hak9OzAHaiIsSHl/NCrwHEEnl10KxeVjNy';
+    String token = 'U2FsdGVkX1/UtFP1DwPxjjmludOU38Gxftqfvo6chIdQqawjSC86Zxk34RmEFSgwD5P2uNXhkxxYX3qlgBZDrR0JnxzSn9iVysW2NyEJMiAmVS6DOZr3YR2mBYS/KM2OsDCM5ETfcy5W4uo5RcJ3+GtN1ASi2mVybC2ZTeol9/GYV+zndAMDM/xDs+53zYEPu5YHA2s7ROMhtUAZNBs4szbl3a6E3lBNOHIlHZbxhVp0clfEhlSvJGMVTCPIp/VzVjpAV/IL0aBn1LMlvrUyqoosLN6sQ8izR8PLwyF9O6TrfPRrX8XFTK1tzv2IKHNVyJVrWke2cTaIW+OEcjGAyhkazhIfi1ppOszswVfktO83uWvJMKNhIRmltPK0fJDYa7a8CvOakEJIPzZctDEt6xsza1HxrkI9YiemtCXqSYfYixeW/dER5uy9ldSNhgJB';
     dio.options.headers['Authorization'] = 'Bearer $token';
   }
   return dio;
 }
+

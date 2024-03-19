@@ -1,6 +1,6 @@
 import 'package:borigarn/core/theme/app_color_extension.dart';
 import 'package:borigarn/core/widgets/AppTextField.dart';
-import 'package:borigarn/feature/authen/type/LoginFormType.dart';
+import 'package:borigarn/feature/authen/type/login_form_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -40,7 +40,7 @@ class LoginTextField extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 12,
-                  vertical: 4,
+                  vertical: 15,
                 ),
                 child: Icon(
                   hidePassword.value ? Icons.visibility_off_outlined : Icons.visibility_outlined,

@@ -4,14 +4,12 @@ import 'package:borigarn/core/widgets/AppTextField.dart';
 import 'package:borigarn/core/widgets/ButtonWidget.dart';
 import 'package:borigarn/core/widgets/main_app_bar.dart';
 import 'package:borigarn/core/widgets/main_card.dart';
-import 'package:borigarn/feature/booking/views/tags_view.dart';
 import 'package:borigarn/gen/assets.gen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -89,7 +87,7 @@ class ReviewScreen extends HookConsumerWidget {
             const Gap(20).wrapSliver(),
             Text('What’s your suggestion for the provider?', style: context.textTheme.labelMedium?.apply(color: context.appColors.title),).wrapSliver(),
             const Gap(12).wrapSliver(),
-            AppTextField(hintText: 'Anything for us to notice? \n Eg: Bathroom needs harder clean', maxLine: 4,
+            const AppTextField(hintText: 'Anything for us to notice? \n Eg: Bathroom needs harder clean', maxLine: 4,
             ).wrapSliver(),
 
           ],

@@ -1,7 +1,23 @@
+import 'dart:convert';
+import 'dart:ffi';
+import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:borigarn/core/datasource/authen_datasource.dart';
+import 'package:borigarn/core/manager/network.dart';
+import 'package:borigarn/core/route/app_route.dart';
+import 'package:borigarn/core/utils/error.dart';
+import 'package:borigarn/core/widgets/AppToast.dart';
+import 'package:borigarn/feature/authen/models/payload/request_otp_payload.dart';
+import 'package:borigarn/feature/authen/models/payload/reset_password_payload.dart';
+import 'package:borigarn/feature/authen/models/verify_otp_model.dart';
+import 'package:borigarn/feature/authen/type/authen_flow_type.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 part 'login_controller.g.dart';
 
@@ -12,191 +28,65 @@ LoginController loginController(LoginControllerRef ref) {
 
 class LoginController {
   final ProviderRef ref;
+
   LoginController(this.ref);
 
+  Future<void> requestOTP(RequestOTPPayload payload) async {
+    try {
+      var deviceInfo = DeviceInfoPlugin();
+      if (Platform.isIOS) {
+        IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+        payload.uniqueId = iosInfo.identifierForVendor ?? '';
+        payload.deviceId = iosInfo.utsname.machine;
+      } else {
+        AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+        payload.deviceId = androidInfo.model;
+        payload.uniqueId = androidInfo.id;
+      }
+      EasyLoading.show();
+      final response = await ref.read(authenDatasourceProvider).requestOTP(payload);
+      response.phoneNumber = payload.phone;
+      EasyLoading.dismiss();
+      ref.read(goRouterProvider).pushNamed('verify_otp', extra: (response, payload.action));
+    } catch (e) {
+      AppToast.failed(message: e.toError());
+      EasyLoading.dismiss();
+    }
+  }
 
-  // void addTelFormatListener({
-  //   required TextEditingController usernameTextController,
-  //   required FocusNode usernameFocusNode,
-  //   required WidgetRef ref,
-  // }) {
-  //   usernameFocusNode.addListener(() {
-  //     String userText = usernameTextController.text.split("-").join();
-  //     bool userCheck = RegExpList.regexMbNumber.hasMatch(userText);
-  //     if (userCheck) {
-  //       final formatTel = "${userText.substring(0, 3)}-${userText.substring(3, 6)}-${userText.substring(6)}";
-  //       if (!usernameFocusNode.hasFocus) {
-  //         usernameTextController.text = formatTel;
-  //       } else {
-  //         usernameTextController.text = userText.split("-").join();
-  //       }
-  //       ref.watch(telUserNameProvider.notifier).setCurrentUserName(formatTel);
-  //     } else {
-  //       ref.invalidate(telUserNameProvider);
-  //     }
-  //   });
-  // }
+  Future<void> resetPassword(ResetPasswordPayload payload) async {
+    EasyLoading.show();
+    try {
+      final response = await ref.read(authenDatasourceProvider).resetPassword(payload);
+      AppToast.success(message: 'Reset password is success');
+      Future.delayed(2.seconds, () {
+        ref.read(goRouterProvider).popUntilPath('/login');
+      });
+      EasyLoading.dismiss();
+    }catch(error) {
+      EasyLoading.dismiss();
+      AppToast.failed(message: error.toString());
+    }
+  }
 
-  // Future<void> showLoginErrorDialog(NetworkException e) {
-  //   if (e.statusCode == 404) {
-  //     return showDialog<void>(
-  //       context: rootContext()!,
-  //       barrierColor: rootContext()!.appColors.black.withOpacity(0.48),
-  //       barrierDismissible: true,
-  //       builder: (BuildContext dialogContext) {
-  //         return const WarningDialog(
-  //           title: 'อีเมลหรือเบอร์โทรศัพท์ไม่ถูกต้อง',
-  //           subTitle: 'กรุณาตรวจสอบอีเมลหรือเบอร์โทรศัพท์',
-  //           buttonText: 'กรอกข้อมูลใหม่อีกครั้ง',
-  //         );
-  //       },
-  //     );
-  //   }
-  //   if (e.statusCode == 401) {
-  //     return showDialog<void>(
-  //       context: rootContext()!,
-  //       barrierColor: rootContext()!.appColors.black.withOpacity(0.48),
-  //       barrierDismissible: true,
-  //       builder: (BuildContext dialogContext) {
-  //         return const WarningDialog(
-  //           title: 'รหัสผ่านไม่ถูกต้อง',
-  //           subTitle: 'กรุณาตรวจสอบรหัสผ่านของคุณให้ถูกต้อง\nและลองใหม่อีกครั้ง',
-  //           buttonText: 'กรอกข้อมูลใหม่อีกครั้ง',
-  //         );
-  //       },
-  //     );
-  //   }
-  //   return showDialog<void>(
-  //     context: rootContext()!,
-  //     barrierDismissible: true,
-  //     barrierColor: Colors.transparent,
-  //     builder: (BuildContext dialogContext) {
-  //       return const ErrorDialog();
-  //     },
-  //   );
-  // }
-  //
-  // void setLoginToken({
-  //   required String accessToken,
-  //   loginType = "MyPinmall",
-  // }) {
-  //   SharedPrefs().setToken = accessToken;
-  //   SharedPrefs().loginType = loginType;
-  //   ref.invalidate(dioClientProvider);
-  //
-  //   //Todo use network cilents
-  //   ref.invalidate(getPinProductIdsProvider);
-  //   ref.invalidate(basketCountProvider);
-  // }
-  //
-  // Future<void> loginWithMyOrder({
-  //   required String email,
-  //   required String password,
-  //   required String secretKey,
-  // }) async {
-  //   try {
-  //     FocusManager.instance.primaryFocus?.unfocus();
-  //     EasyLoading.show();
-  //     final String passwordHashed = sha256.convert(utf8.encode(password)).toString();
-  //     final loginWithSecretKey = await ref.read(authenticationMyOrderRepositoryProvider).loginWithSecretKey(
-  //       email: email,
-  //       password: passwordHashed,
-  //       secretKey: secretKey,
-  //     );
-  //     SharedPrefs().setToken = loginWithSecretKey.accessToken ?? "";
-  //     ref.invalidate(dioClientProvider);
-  //
-  //     final tokenResponse = await ref.read(authenticationRepositoryProvider).loginWithMyOrder(
-  //       profile: loginWithSecretKey.profile ?? "",
-  //       profileImg: loginWithSecretKey.profileImg ?? "",
-  //     );
-  //     print(tokenResponse.accessToken);
-  //     setLoginToken(
-  //       accessToken: tokenResponse.accessToken,
-  //       loginType: "MyOrder",
-  //     );
-  //     EasyLoading.dismiss();
-  //     ref.read(goRouterProvider).popUntilPath('/login');
-  //     ref.read(goRouterProvider).pop();
-  //   } on NetworkException catch (e) {
-  //     EasyLoading.dismiss();
-  //     _handleLoginByMyOrderError(e);
-  //   }
-  // }
-  //
-  // Future<void> _handleLoginByMyOrderError(NetworkException e) {
-  //   if (e.statusCode == 401) {
-  //     if (e.data["name"] == "UnAuthorizedException") {
-  //       return showDialog(
-  //         context: rootContext()!,
-  //         barrierColor: rootContext()!.appColors.black.withOpacity(0.48),
-  //         barrierDismissible: true,
-  //         builder: (BuildContext dialogContext) {
-  //           return const WarningDialog(
-  //             title: 'รหัสผ่านไม่ถูกต้อง',
-  //             subTitle: 'กรุณาตรวจสอบรหัสผ่านของคุณให้ถูกต้อง\nและลองใหม่อีกครั้ง',
-  //             buttonText: 'กรอกข้อมูลใหม่อีกครั้ง',
-  //           );
-  //         },
-  //       );
-  //     }
-  //     if (e.data['name'] == "EmailNotFoundException") {
-  //       return showDialog(
-  //         context: rootContext()!,
-  //         barrierColor: rootContext()!.appColors.black.withOpacity(0.48),
-  //         barrierDismissible: true,
-  //         builder: (BuildContext dialogContext) {
-  //           return const WarningDialog(
-  //             title: 'ไม่พบบัญชีนี้',
-  //             subTitle: 'โปรดใช้บัญชีอื่นหรือลงทะเบียนสำหรับบัญชีใหม่',
-  //             buttonText: 'กรอกข้อมูลใหม่อีกครั้ง',
-  //           );
-  //         },
-  //       );
-  //     }
-  //   }
-  //   if (e.statusCode == 400) {
-  //     return showDialog(
-  //       context: rootContext()!,
-  //       barrierColor: rootContext()!.appColors.black.withOpacity(0.48),
-  //       barrierDismissible: true,
-  //       builder: (BuildContext dialogContext) {
-  //         return const WarningDialog(
-  //           title: 'อีเมลหรือเบอร์โทรศัพท์ไม่ถูกต้อง',
-  //           subTitle: 'กรุณาตรวจสอบอีเมลหรือเบอร์โทรศัพท์',
-  //           buttonText: 'กรอกข้อมูลใหม่อีกครั้ง',
-  //         );
-  //       },
-  //     );
-  //   }
-  //   if (e.statusCode == 403) {
-  //     return showDialog(
-  //       context: rootContext()!,
-  //       barrierColor: rootContext()!.appColors.black.withOpacity(0.48),
-  //       barrierDismissible: true,
-  //       builder: (BuildContext dialogContext) {
-  //         return WarningDialog(
-  //           title: 'กรุณาทำการเข้าสู่ระบบใหม่อีกครั้ง',
-  //           subTitle: 'เนื่องจากแอปพลิเคชันไม่ตอบสนองนานเกินไป',
-  //           buttonText: 'เข้าสู่ระบบ',
-  //           design2: true,
-  //           onPressed: resetSecretKey,
-  //         );
-  //       },
-  //     );
-  //   }
-  //   return showDialog<void>(
-  //     context: rootContext()!,
-  //     barrierDismissible: true,
-  //     barrierColor: Colors.transparent,
-  //     builder: (BuildContext dialogContext) {
-  //       return const ErrorDialog();
-  //     },
-  //   );
-  // }
-  //
-  // void resetSecretKey() {
-  //   ref.invalidate(getMyOrderSecretKeyProvider);
-  //   ref.read(goRouterProvider).pop();
-  // }
+  Future<void> googleSignin(OAuthCredential credential) async {
+    int x = 0;
+    List<int> xxx = [1,2,4];
+    EasyLoading.show();
+
+    // try {
+    //   final response = await ref.read(authenDatasourceProvider).resetPassword(payload);
+    //   AppToast.success(message: 'Reset password is success');
+    //   Future.delayed(2.seconds, () {
+    //     ref.read(goRouterProvider).popUntilPath('/login');
+    //   });
+    //   EasyLoading.dismiss();
+    // }catch(error) {
+    //   EasyLoading.dismiss();
+    //   AppToast.failed(message: error.toString());
+    // }
+  }
+
+
+
 }

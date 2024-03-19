@@ -63,9 +63,9 @@ class AppImageNetwork extends StatelessWidget {
           fadeInDuration: fadeInDuration,
           fadeOutDuration: fadeOutDuration,
           placeholder: placeholder,
-          errorWidget: (context, url, error) => errorWidget ?? const Text('error')
+          errorWidget: (context, url, error) => errorWidget ?? const Text('')
 
-      ) : const Text('error')
+      ) : const Text('')
     ),
     );
   }
