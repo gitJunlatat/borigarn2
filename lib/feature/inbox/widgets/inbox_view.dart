@@ -21,8 +21,17 @@ class InboxView extends ConsumerWidget {
       },
       child: Consumer(builder: (context, ref, child) {
         return ref.watch(getInboxProvider).when(
-            data: (data) =>
-                ListView.builder(
+            data: (data) {
+              if(data.isEmpty) {
+                return Center(
+                  child: SizedBox(
+                    width: 1.sw,
+                    height: 1.sw,
+                    child: const EmptyView(),
+                  ),
+                );
+              }
+                return ListView.builder(
                 padding: const EdgeInsets.only(top: 0),
                 itemCount: data.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -59,8 +68,15 @@ class InboxView extends ConsumerWidget {
                       ),
                     ),
                   );
-                }),
-            error: (err, stack) => SizedBox(width:1.sw, height: 1.sh ,child: const EmptyView()),
+                });
+                },
+            error: (err, stack) => Center(
+              child: SizedBox(
+                width: 1.sw,
+                height: 1.sw,
+                child: const EmptyView(),
+              ),
+            ),
             loading: () => const ShimmerListLoading(count: 6,));
       }),
     );

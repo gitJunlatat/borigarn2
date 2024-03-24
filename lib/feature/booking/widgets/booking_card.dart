@@ -2,20 +2,26 @@ import 'package:borigarn/core/theme/app_color_extension.dart';
 import 'package:borigarn/core/types/booking_status_type.dart';
 import 'package:borigarn/core/widgets/ButtonWidget.dart';
 import 'package:borigarn/feature/booking/model/booking_model.dart';
+import 'package:borigarn/feature/home/models/booking_response_model.dart';
+import 'package:borigarn/feature/home/models/booking_response_model.dart';
+import 'package:borigarn/feature/home/state/get_services.dart';
 import 'package:borigarn/gen/assets.gen.dart';
+import 'package:borigarn/global/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class BookingCard extends StatelessWidget {
+class BookingCard extends ConsumerWidget {
   final BookingModel model;
   final bool isShowDetail;
   const BookingCard({super.key, required this.model, this.isShowDetail = false});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final status = model.status?.toBookingStatusType() ?? BookingStatusType.system;
 
     return Container(
@@ -30,7 +36,7 @@ class BookingCard extends StatelessWidget {
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Flexible(
                 child: Text(
-                  'Booking no #${model.number ?? ''}',
+                  '${context.tr(LocaleKeys.bookingNo)} #${model.number ?? ''}',
                   style: context.textTheme.labelMedium?.apply(color: isShowDetail ? context.appColors.primary : Colors.black),
                   maxLines: 2,
                 )),
@@ -47,7 +53,7 @@ class BookingCard extends StatelessWidget {
           const Gap(15),
           if(!isShowDetail)
             Text(
-              'Scheduled',
+              context.tr(LocaleKeys.scheduled),
               style: context.textTheme.bodyMedium?.apply(color: context.appColors.subTitle),
             ),
           const Gap(5),
@@ -64,7 +70,7 @@ class BookingCard extends StatelessWidget {
           const Gap(15),
           if(!isShowDetail)
             Text(
-            'Location',
+            context.tr(LocaleKeys.location),
             style: context.textTheme.bodyMedium?.apply(color: context.appColors.subTitle),
           ),
           const Gap(5),
@@ -82,12 +88,20 @@ class BookingCard extends StatelessWidget {
           if(!isShowDetail && !status.isPast)
             Row(
             children: [
+
               Expanded(
                   child: ButtonWidget(
                     onPressed: () {
-                      context.pushNamed(
-                          'booking_detail',
-                          extra: model);
+                      if(status == BookingStatusType.waitingPayment) {
+                        final bookingModel = BookingResponseModel(id: model.id, userLocationId: model.userLocationId?.id, date: model.date, time: model.time, number: model.number, price: int.parse(model.price ?? '0'), userId: model.userId);
+                        context.pushNamed(
+                            'payment_screen',
+                            extra: bookingModel);
+                      }else {
+                        context.pushNamed(
+                            'booking_detail',
+                            extra: model);
+                      }
                     },
                     text: status.buttonTitle,
                     backgroundColor: context.appColors.primary,
@@ -106,7 +120,7 @@ class BookingCard extends StatelessWidget {
                         context.pushNamed(
                             'review');
                       },
-                      text: 'Review',
+                      text: context.tr(LocaleKeys.review),
                       backgroundColor: context.appColors.primary,
                       textColor: Colors.white,
                     )),
@@ -115,11 +129,17 @@ class BookingCard extends StatelessWidget {
                 Expanded(
                     child: ButtonWidget(
                       onPressed: () {
-                        // context.pushNamed(
-                        //     'booking_detail',
-                        //     extra: model);
+                        final allService = ref.read(getServicesProvider).valueOrNull;
+                        if(allService == null) { return; }
+
+                        final service = allService.firstWhereOrNull((element) => element.id == model.service?.id);
+                        if(service == null) { return; }
+
+                        context.pushNamed(
+                            'create_booking',
+                            extra: service);
                       },
-                      text: 'Book Again',
+                      text: context.tr(LocaleKeys.bookAgain),
                       backgroundColor: context.appColors.primary.withOpacity(0.1),
                       textColor: context.appColors.primary,
                     ))

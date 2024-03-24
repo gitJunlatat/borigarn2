@@ -1,3 +1,4 @@
+import 'package:borigarn/core/models/location_model.dart';
 import 'package:borigarn/core/theme/app_annotated_region.dart';
 import 'package:borigarn/feature/authen/models/request_otp_model.dart';
 import 'package:borigarn/feature/authen/models/verify_otp_model.dart';
@@ -11,15 +12,24 @@ import 'package:borigarn/feature/booking/model/booking_model.dart';
 import 'package:borigarn/feature/booking/views/booking_detail_screen.dart';
 import 'package:borigarn/feature/booking/views/booking_screen.dart';
 import 'package:borigarn/feature/booking/views/review_screen.dart';
+import 'package:borigarn/feature/home/models/booking_response_model.dart';
 import 'package:borigarn/feature/home/models/service_model.dart';
 import 'package:borigarn/feature/home/types/service_type.dart';
+import 'package:borigarn/feature/home/views/booking_info_screen.dart';
 import 'package:borigarn/feature/home/views/create_booking_screen.dart';
 import 'package:borigarn/feature/home/views/home_screen.dart';
+import 'package:borigarn/feature/home/views/payment_screen.dart';
+import 'package:borigarn/feature/home/views/success_booking_screen.dart';
 import 'package:borigarn/feature/inbox/inbox_screen.dart';
 import 'package:borigarn/feature/location/edit_location_screen.dart';
 import 'package:borigarn/feature/location/location_screen.dart';
+import 'package:borigarn/feature/profile/application_feedback_screen.dart';
 import 'package:borigarn/feature/profile/edit_profile_screen.dart';
+import 'package:borigarn/feature/profile/invite_friend_screen.dart';
+import 'package:borigarn/feature/profile/language_screen.dart';
+import 'package:borigarn/feature/profile/privacy_screen.dart';
 import 'package:borigarn/feature/profile/profile_screen.dart';
+import 'package:borigarn/feature/profile/types/settings_menu_type.dart';
 import 'package:borigarn/feature/tabbar/tabbar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -78,13 +88,42 @@ final router = GoRouter(
                     return CreateBookingScreen(model: model);
                   },
                 ),
+
+                GoRoute(
+                  name: 'booking_info',
+                  path: 'booking_info',
+                  parentNavigatorKey: rootNavigation,
+                  builder: (context, state) {
+                    final model = state.extra as Service;
+                    return BookingInfoScreen(service: model);
+                  },
+                ),
+                GoRoute(
+                  name: 'payment_screen',
+                  path: 'payment_screen',
+                  parentNavigatorKey: rootNavigation,
+                  builder: (context, state) {
+                    return PaymentScreen(model: state.extra as BookingResponseModel);
+                  },
+                ),
+
+                GoRoute(
+                  name: 'success_booking_screen',
+                  path: 'success_booking_screen',
+                  parentNavigatorKey: rootNavigation,
+                  builder: (context, state) {
+                    return SuccessBookingScreen(bookingName: state.extra as String);
+                  },
+                ),
+
+
               ],
             ),
           ],
         ),
         StatefulShellBranch(
           routes: <RouteBase>[
-            GoRoute(path: '/booking', builder: (context, state) => const AppAnnotatedRegion.dark(child: BookingScreen()), routes: [
+            GoRoute(path: '/booking', name: 'booking', builder: (context, state) => const AppAnnotatedRegion.dark(child: BookingScreen()), routes: [
               GoRoute(
                 name: 'booking_detail',
                 path: 'booking_detail',
@@ -202,12 +241,45 @@ final router = GoRouter(
       parentNavigatorKey: rootNavigation,
       builder: (context, state) {
         return const AppAnnotatedRegion.dark(child: EditProfileScreen());
-
       },
-      routes: [
-
-      ],
     ),
+
+    GoRoute(
+      name: 'language_screen',
+      path: '/language_screen',
+      parentNavigatorKey: rootNavigation,
+      builder: (context, state) {
+        return const AppAnnotatedRegion.dark(child: LanguageScreen());
+      },
+    ),
+
+    GoRoute(
+      name: 'privacy',
+      path: '/privacy',
+      parentNavigatorKey: rootNavigation,
+      builder: (context, state) {
+        return AppAnnotatedRegion.dark(child: PrivacyScreen(type: state.extra as SettingMenuType));
+      },
+    ),
+
+    GoRoute(
+      name: 'feedback',
+      path: '/feedback',
+      parentNavigatorKey: rootNavigation,
+      builder: (context, state) {
+        return const AppAnnotatedRegion.dark(child: ApplicationFeedbackScreen());
+      },
+    ),
+
+    GoRoute(
+      name: 'invite',
+      path: '/invite',
+      parentNavigatorKey: rootNavigation,
+      builder: (context, state) {
+        return const AppAnnotatedRegion.dark(child: InviteFriendScreen());
+      },
+    ),
+
 
     GoRoute(
       name: 'location',
@@ -223,11 +295,9 @@ final router = GoRouter(
           path: 'edit_location',
           parentNavigatorKey: rootNavigation,
           builder: (context, state) {
-            return const AppAnnotatedRegion.dark(child: EditLocationScreen());
+            final location = state.extra as LocationModel?;
+            return AppAnnotatedRegion.dark(child: EditLocationScreen(currentLocation: location,));
           },
-          routes: [
-
-          ],
         )
 
       ],

@@ -6,8 +6,13 @@ import 'package:borigarn/core/route/app_route.dart';
 import 'package:borigarn/core/utils/error.dart';
 import 'package:borigarn/core/widgets/AppToast.dart';
 import 'package:borigarn/feature/home/state/get_user.dart';
+import 'package:borigarn/feature/home/types/app_button_dialog_type.dart';
+import 'package:borigarn/feature/home/widgets/confirm_dialog.dart';
 import 'package:borigarn/feature/location/models/payload/select_location.dart';
 import 'package:borigarn/feature/location/state/get_location.dart';
+import 'package:borigarn/global/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -51,6 +56,43 @@ class ProfileController {
         AppToast.failed(message: "Profile update unsuccessful.");
         EasyLoading.dismiss();
       }
+  }
+
+  Future<void> deleteAccount() async {
+    showDialog(
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.48),
+      context: rootContext()!,
+      builder: (context) {
+        return AppConfirmDialog(
+          title: context.tr(LocaleKeys.deleteAccountWording),
+          message: '',
+          buttons: const [AppButtonDialogType.cancel, AppButtonDialogType.ok],
+          onPressed: (buttonType) {
+
+          },
+        );
+      },
+    );
+  }
+
+
+  Future<void> logout() async {
+    showDialog(
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.48),
+      context: rootContext()!,
+      builder: (context) {
+        return AppConfirmDialog(
+          title: context.tr(LocaleKeys.confirmLogout),
+          message: '',
+          buttons: const [AppButtonDialogType.cancel, AppButtonDialogType.ok],
+          onPressed: (buttonType) {
+
+          },
+        );
+      },
+    );
   }
 
 }

@@ -10,6 +10,7 @@ class AppTextField extends StatelessWidget {
   final FocusNode? focusNode;
   final EdgeInsetsGeometry? contentPadding;
   final void Function(String)? onSubmitted;
+  final void Function()? onEditCompleted;
   final ValueChanged<String>? onChanged;
   final TextInputAction? textInputAction;
   final TextInputType? textInputType;
@@ -38,6 +39,7 @@ class AppTextField extends StatelessWidget {
     this.focusNode,
     this.contentPadding,
     this.onSubmitted,
+    this.onEditCompleted,
     this.onChanged,
     this.textInputAction,
     this.textInputType,
@@ -64,6 +66,7 @@ class AppTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onEditingComplete: onEditCompleted,
       controller: controller,
       focusNode: focusNode,
       style: context.textTheme.bodyMedium,

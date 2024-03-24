@@ -1,4 +1,5 @@
 import 'package:borigarn/core/route/app_route.dart';
+import 'package:borigarn/feature/profile/types/language_type.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -61,12 +62,21 @@ class DateAction {
     return formattedDate;
   }
 
-  static String getDateStringFormatted(DateTime dateTime) {
+  static String getDateStringFormatted(DateTime dateTime, LanguageType locale) {
     tz.initializeTimeZones();
     tz.Location timeZone = tz.getLocation('Asia/Bangkok');
 
     dateTime = tz.TZDateTime.from(dateTime, timeZone);
-    String formattedDate = DateFormat('d MMM yy', 'th').format(getThaiDateTime(dateTime));
+    String formattedDate = DateFormat('d MMM yy', locale.name).format(getThaiDateTime(dateTime));
+    return formattedDate;
+  }
+
+  static String getDateStringFormattedPayload(DateTime dateTime) {
+    tz.initializeTimeZones();
+    tz.Location timeZone = tz.getLocation('Asia/Bangkok');
+
+    dateTime = tz.TZDateTime.from(dateTime, timeZone);
+    String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
     return formattedDate;
   }
 

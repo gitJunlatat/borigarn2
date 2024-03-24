@@ -1,4 +1,6 @@
 import 'package:borigarn/core/theme/app_color_extension.dart';
+import 'package:borigarn/global/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -13,9 +15,9 @@ class UserContentView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Welcome, ${name}', style: context.textTheme.headlineMedium?.apply(color: context.appColors.title),),
+          Text('${context.tr('welcome')}, ${name}', style: context.textTheme.headlineMedium?.apply(color: context.appColors.title),),
           const Gap(4),
-          Text('Need some help today?', style: context.textTheme.bodyMedium?.apply(color: context.appColors.subTitle),),
+          Text(context.tr('needHelp'), style: context.textTheme.bodyMedium?.apply(color: context.appColors.subTitle),),
         ],
       ),
     );

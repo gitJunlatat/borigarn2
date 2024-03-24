@@ -6,6 +6,7 @@ import 'package:borigarn/feature/home/views/home_screen.dart';
 import 'package:borigarn/feature/inbox/inbox_screen.dart';
 import 'package:borigarn/feature/profile/profile_screen.dart';
 import 'package:borigarn/gen/assets.gen.dart';
+import 'package:borigarn/global/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 
 enum TabBarType { home, booking, inbox, profile }
@@ -14,13 +15,13 @@ extension TabBarTypeExtension on TabBarType {
   String getName() {
     switch (this) {
       case TabBarType.home:
-        return 'Home';
+        return LocaleKeys.home;
       case TabBarType.booking:
-        return 'Booking';
+        return LocaleKeys.bookings;
       case TabBarType.inbox:
-        return 'Inbox';
+        return LocaleKeys.inbox;
       case TabBarType.profile:
-        return 'Profile';
+        return LocaleKeys.profile;
     }
   }
 

@@ -4,6 +4,8 @@ import 'package:borigarn/core/widgets/main_app_bar.dart';
 import 'package:borigarn/feature/inbox/state/get_inbox.dart';
 import 'package:borigarn/feature/inbox/widgets/inbox_view.dart';
 import 'package:borigarn/feature/inbox/widgets/promotion_view.dart';
+import 'package:borigarn/global/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -30,7 +32,7 @@ class InboxScreen extends HookConsumerWidget {
     return Scaffold(
       backgroundColor: context.appColors.light,
       appBar: MainAppBar(
-        title: 'Inbox',
+        title: context.tr(LocaleKeys.inbox),
         leftNavigation: const [],
         rightNavigation: const [],
         isCenterTitle: true,
@@ -51,9 +53,9 @@ class InboxScreen extends HookConsumerWidget {
               controller: tabController,
               labelStyle: context.textTheme.labelSmall!.apply(color: context.appColors.primary),
               unselectedLabelStyle: context.textTheme.bodySmall!.apply(color: context.appColors.subTitle),
-              tabs: const [
-                Row(mainAxisSize: MainAxisSize.min, children: [Tab(text: 'Inbox')]),
-                Row(mainAxisSize: MainAxisSize.min, children: [Tab(text: 'Promotions')]),
+              tabs:  [
+                Row(mainAxisSize: MainAxisSize.min, children: [Tab(text: context.tr(LocaleKeys.inbox))]),
+                Row(mainAxisSize: MainAxisSize.min, children: [Tab(text: context.tr(LocaleKeys.promotion))]),
               ],
               padding: EdgeInsets.zero,
               labelColor: context.appColors.secondary,

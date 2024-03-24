@@ -1,4 +1,5 @@
 import 'package:borigarn/gen/assets.gen.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 enum EditFormType {
   name,
@@ -8,11 +9,11 @@ enum EditFormType {
   String get title {
     switch(this) {
       case EditFormType.name:
-        return 'Your name';
+        return 'yourName'.tr();
       case EditFormType.phoneNumber:
-        return 'Phone number';
+        return 'phoneNumber'.tr();
       case EditFormType.email:
-        return 'Email';
+        return 'email'.tr();
     }
   }
 

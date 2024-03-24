@@ -1,3 +1,4 @@
+import 'package:borigarn/feature/home/models/service_detail.dart';
 import 'package:borigarn/feature/home/models/service_model.dart';
 import 'package:flutter/material.dart';
 

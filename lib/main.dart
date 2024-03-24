@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:borigarn/core/manager/network.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'core/prefs/prefs.dart';
 import 'core/route/app_route.dart';
 import 'core/theme/app_theme.dart';
+import 'global/generated/codegen_loader.g.dart';
+
 void main() {
   mainCommon();
   // runApp(const MyApp());
@@ -23,6 +26,7 @@ void main() {
 FutureOr<void> mainCommon() async {
 
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   FlutterNativeSplash.remove();
   if (Platform.isIOS) {
     await Firebase.initializeApp(
@@ -50,10 +54,18 @@ FutureOr<void> mainCommon() async {
   // await FirebaseAuth.instance.useAuthEmulator('127.0.0.1', 9099);
 
   runApp(
-    const ProviderScope(
+     ProviderScope(
       // observers: [Observers()],
-      child: KeyboardDismissOnTap(
-        child: MyApp(),
+      child: EasyLocalization(
+        supportedLocales: const [Locale('th'), Locale('en')],
+        path: 'assets/translations',
+        fallbackLocale: const Locale('th'),
+          assetLoader: const CodegenLoader(),
+
+
+          child: const KeyboardDismissOnTap(
+          child: MyApp(),
+        ),
       ),
     ),
   );
@@ -70,6 +82,9 @@ class MyApp extends ConsumerWidget {
       designSize: const Size(360, 800),
       builder: (_,child) {
         return MaterialApp.router(
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: themeMode,

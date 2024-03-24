@@ -13,7 +13,7 @@ class EmptyView extends StatelessWidget {
       child: Container(
         width: 100.w, height: 100.h,
         decoration: BoxDecoration(
-            color: context.appColors.secondaryText,
+            color: context.appColors.border,
             shape: BoxShape.circle
         ),
         child: Padding(padding: const EdgeInsets.all(10), child: MyAssets.logoSecond.image(width: 100.w, height: 100.h)),

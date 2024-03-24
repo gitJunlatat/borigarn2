@@ -51,7 +51,7 @@ class BookingDetailScreen extends StatelessWidget {
             ).wrapSliver(),
             const Gap(16).wrapSliver(),
             if (status == BookingStatusType.confirmed || status == BookingStatusType.confirmedPaymentCash)
-              PaymentDetail(price: model.price ?? '0').wrapSliver(),
+              PaymentDetail(price:  model.price ?? '0').wrapSliver(),
             if (status != BookingStatusType.confirmed && status != BookingStatusType.confirmedPaymentCash)
               Center(
                   child: Padding(

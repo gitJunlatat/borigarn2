@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../route/app_route.dart';
 
 enum ActionNavigationType {
-  ptsIcon, navigationBack, searchIcon, inactiveDelete, activeDelete, loading, booking, close, info
+  ptsIcon, navigationBack, navigationBackManual, searchIcon, inactiveDelete, activeDelete, loading, booking, close, info
 }
 
 extension AppNavigationTypeExtension on ActionNavigationType {
@@ -14,6 +14,7 @@ extension AppNavigationTypeExtension on ActionNavigationType {
     switch (this) {
       case ActionNavigationType.ptsIcon:
       case ActionNavigationType.navigationBack:
+      case ActionNavigationType.navigationBackManual:
       case ActionNavigationType.searchIcon:
         return MyAssets.navBack.svg(width: 26, height: 26);
       case ActionNavigationType.inactiveDelete:

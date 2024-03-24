@@ -3,6 +3,7 @@ import 'package:borigarn/core/manager/network.dart';
 import 'package:borigarn/core/prefs/prefs.dart';
 import 'package:borigarn/core/theme/app_color_extension.dart';
 import 'package:borigarn/core/utils/wrap_sliver.dart';
+import 'package:borigarn/feature/home/controller/home_controller.dart';
 import 'package:borigarn/feature/home/state/get_campaign.dart';
 import 'package:borigarn/feature/home/state/get_services.dart';
 import 'package:borigarn/feature/home/state/get_user.dart';
@@ -11,6 +12,8 @@ import 'package:borigarn/feature/home/widgets/popular_view.dart';
 import 'package:borigarn/feature/home/widgets/promotion_card.dart';
 import 'package:borigarn/feature/home/widgets/user_content_view.dart';
 import 'package:borigarn/feature/location/state/get_location.dart';
+import 'package:borigarn/global/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -35,6 +38,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if(!SharedPrefs().isAuthentication()) {
+
         // context.pushNamed('login');
       }
     });
@@ -43,9 +47,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: const ProfileAppBar(),
+      backgroundColor: context.appColors.light,
       body: RefreshIndicator(
-        onRefresh: () async => ({}),
+        onRefresh: ()   async {
+                ref.invalidate(getServicesProvider);
+                ref.invalidate(getCampaignsProvider);
+                ref.invalidate(getUserProvider);
+                ref.invalidate(getLocationProvider);
+            },
         child: Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 0,
@@ -59,7 +68,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: InkWell(
                       onTap: () {
-                        context.pushNamed('location');
+                       context.pushNamed('location');
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -81,7 +90,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               );
                             }, error: (stack, error) {
                               return Text(
-                                'Service Location',
+                                context.tr(LocaleKeys.yourLocation),
                                 style: context.textTheme.bodyMedium?.apply(color: Colors.white),
                               );
                             }, loading: () {
@@ -113,15 +122,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         builder: (BuildContext context, WidgetRef ref, Widget? child) {
                           return ref.watch(getUserProvider).when(data: (data) {
                             return SliverPadding(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
                               sliver: UserContentView(
                                 name: data.name ?? '',
                               ),
                             );
                           }, error: (stack,error) {
-                            return SizedBox.shrink().wrapSliver();
+                            return const SizedBox.shrink().wrapSliver();
                           }, loading: () {
-                            return SizedBox.shrink().wrapSliver();
+                            return const SizedBox.shrink().wrapSliver();
                           });
 
                         },
@@ -163,8 +172,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         sliver: SliverToBoxAdapter(
                             child: Text(
-                              'Our Services',
-                              style: context.textTheme.titleLarge?.apply(color: context.appColors.title),
+                              context.tr('ourService'),
+                              style: context.textTheme.headlineMedium?.apply(color: context.appColors.title),
                             )),
                       ),
                       const SliverToBoxAdapter(child: Gap(20)),
@@ -190,7 +199,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       final serviceType = data[index].id!.toServiceType();
                                       return InkWell(
                                         onTap: () {
-                                          context.pushNamed('create_booking', extra: data[index]);
+                                          ref.read(homeControllerProvider).booking(data[index].deepCopy());
                                         },
                                         child: Container(
                                           decoration: const BoxDecoration(
@@ -202,7 +211,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                                   topLeft: Radius.circular(0), topRight: Radius.circular(20), bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
                                               child: Stack(children: [
                                                 serviceType.image.image(fit: BoxFit.cover, height: 160.h),
-                                                const Positioned(
+                                                if (data[index].isPopular ?? false)
+                                                  const Positioned(
                                                     left: 8,
                                                     top: 8,
                                                     child: PopularView()),

@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:borigarn/core/route/app_route.dart';
 import 'package:borigarn/core/theme/app_color_extension.dart';
 import 'package:borigarn/gen/assets.gen.dart';
+import 'package:borigarn/global/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 enum BookingStatusType {
@@ -32,18 +34,18 @@ enum BookingStatusType {
     switch (this) {
       case BookingStatusType.allComing:
       case BookingStatusType.allPast:
-        return 'All';
+      return LocaleKeys.all.tr();
       case BookingStatusType.confirmed:
       case BookingStatusType.confirmedPaymentCash:
       case BookingStatusType.waitingEstimate:
       case BookingStatusType.waitConfirm:
-        return 'View';
+        return LocaleKeys.view.tr();
       case BookingStatusType.waitingPayment:
-        return 'Pay';
+        return LocaleKeys.pay.tr();
       case BookingStatusType.done:
-        return 'Done';
+        return LocaleKeys.done.tr();
       case BookingStatusType.cancel:
-        return 'Cancelled';
+        return LocaleKeys.cancelled.tr();
       case BookingStatusType.system:
         return 'System';
     }
@@ -53,21 +55,21 @@ enum BookingStatusType {
     switch (this) {
       case BookingStatusType.allComing:
       case BookingStatusType.allPast:
-        return 'All';
+        return LocaleKeys.all.tr();
       case BookingStatusType.waitingEstimate:
-        return 'Waiting for estimate';
+        return LocaleKeys.waitEstimate.tr();
       case BookingStatusType.waitingPayment:
-        return 'Waiting for payment';
+        return LocaleKeys.waitPayment.tr();
       case BookingStatusType.waitConfirm:
-        return 'Waiting for confirmed';
+        return LocaleKeys.waitConfirm.tr();
       case BookingStatusType.confirmed:
-        return 'Confirmed';
+        return LocaleKeys.confirm.tr();
       case BookingStatusType.confirmedPaymentCash:
-        return 'Confirmed';
+        return LocaleKeys.confirm.tr();
       case BookingStatusType.done:
-        return 'Done';
+        return LocaleKeys.done.tr();
       case BookingStatusType.cancel:
-        return 'Cancelled';
+        return LocaleKeys.cancelled.tr();
       case BookingStatusType.system:
         return 'System';
     }
@@ -148,14 +150,14 @@ enum BookingStatusType {
       case BookingStatusType.waitingEstimate:
       case BookingStatusType.waitingPayment:
       case BookingStatusType.waitConfirm:
-        return 'Waiting';
+      return LocaleKeys.waiting.tr();
       case BookingStatusType.confirmed:
       case BookingStatusType.confirmedPaymentCash:
-        return 'Confirmed';
+      return LocaleKeys.confirm.tr();
       case BookingStatusType.done:
-        return 'Done';
+        return LocaleKeys.done.tr();
       case BookingStatusType.cancel:
-        return 'Cancelled';
+        return LocaleKeys.cancelled.tr();
       default:
         return '';
     }

@@ -22,8 +22,11 @@ class $AssetsBookingGen {
   SvgGenImage get locationIcon =>
       const SvgGenImage('assets/booking/location_icon.svg');
 
+  /// File path: assets/booking/time_icon.svg
+  SvgGenImage get timeIcon => const SvgGenImage('assets/booking/time_icon.svg');
+
   /// List of all assets
-  List<SvgGenImage> get values => [calendarIcon, locationIcon];
+  List<SvgGenImage> get values => [calendarIcon, locationIcon, timeIcon];
 }
 
 class $AssetsCategoryGen {
@@ -167,12 +170,26 @@ class $AssetsStatusGen {
       ];
 }
 
+class $AssetsTranslationsGen {
+  const $AssetsTranslationsGen();
+
+  /// File path: assets/translations/en.json
+  String get en => 'assets/translations/en.json';
+
+  /// File path: assets/translations/th.json
+  String get th => 'assets/translations/th.json';
+
+  /// List of all assets
+  List<String> get values => [en, th];
+}
+
 class MyAssets {
   MyAssets._();
 
   static const AssetGenImage addLocation =
       AssetGenImage('assets/add_location.png');
   static const SvgGenImage appleIcon = SvgGenImage('assets/apple_icon.svg');
+  static const AssetGenImage bgAdd = AssetGenImage('assets/bg_add.png');
   static const $AssetsBookingGen booking = $AssetsBookingGen();
   static const SvgGenImage bookingIcon = SvgGenImage('assets/booking_icon.svg');
   static const SvgGenImage cancelIcon = SvgGenImage('assets/cancel_icon.svg');
@@ -180,12 +197,18 @@ class MyAssets {
   static const SvgGenImage checkIcon = SvgGenImage('assets/check_icon.svg');
   static const SvgGenImage closeIcon = SvgGenImage('assets/close_icon.svg');
   static const SvgGenImage editIcon = SvgGenImage('assets/edit_icon.svg');
+  static const AssetGenImage enIcon = AssetGenImage('assets/enIcon.png');
   static const SvgGenImage facebookIcon =
       SvgGenImage('assets/facebook_icon.svg');
   static const SvgGenImage googleIcon = SvgGenImage('assets/google_icon.svg');
   static const SvgGenImage homeIcon = SvgGenImage('assets/home_icon.svg');
+  static const SvgGenImage iconAdd = SvgGenImage('assets/icon_add.svg');
+  static const SvgGenImage iconCoin = SvgGenImage('assets/icon_coin.svg');
+  static const SvgGenImage iconGift = SvgGenImage('assets/icon_gift.svg');
+  static const SvgGenImage iconGive = SvgGenImage('assets/icon_give.svg');
   static const SvgGenImage iconMail = SvgGenImage('assets/icon_mail.svg');
   static const SvgGenImage iconPhone = SvgGenImage('assets/icon_phone.svg');
+  static const SvgGenImage iconShare = SvgGenImage('assets/icon_share.svg');
   static const SvgGenImage iconUser = SvgGenImage('assets/icon_user.svg');
   static const SvgGenImage inboxIcon = SvgGenImage('assets/inbox_icon.svg');
   static const SvgGenImage infoIcon = SvgGenImage('assets/info_icon.svg');
@@ -201,22 +224,35 @@ class MyAssets {
       AssetGenImage('assets/review_image.png');
   static const AssetGenImage splashLogo =
       AssetGenImage('assets/splash_logo.png');
+  static const AssetGenImage splashScreen =
+      AssetGenImage('assets/splash_screen.png');
   static const $AssetsStatusGen status = $AssetsStatusGen();
+  static const AssetGenImage successBooking =
+      AssetGenImage('assets/success_booking.png');
+  static const AssetGenImage thIcon = AssetGenImage('assets/thIcon.png');
+  static const $AssetsTranslationsGen translations = $AssetsTranslationsGen();
 
   /// List of all assets
   static List<dynamic> get values => [
         addLocation,
         appleIcon,
+        bgAdd,
         bookingIcon,
         cancelIcon,
         checkIcon,
         closeIcon,
         editIcon,
+        enIcon,
         facebookIcon,
         googleIcon,
         homeIcon,
+        iconAdd,
+        iconCoin,
+        iconGift,
+        iconGive,
         iconMail,
         iconPhone,
+        iconShare,
         iconUser,
         inboxIcon,
         infoIcon,
@@ -226,7 +262,10 @@ class MyAssets {
         profileBg,
         profileIcon,
         reviewImage,
-        splashLogo
+        splashLogo,
+        splashScreen,
+        successBooking,
+        thIcon
       ];
 }
 

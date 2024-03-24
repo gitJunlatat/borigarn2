@@ -1,6 +1,8 @@
 import 'package:borigarn/core/route/app_route.dart';
 import 'package:borigarn/core/theme/app_color_extension.dart';
 import 'package:borigarn/gen/assets.gen.dart';
+import 'package:borigarn/global/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 
 enum SettingMenuType {
@@ -21,27 +23,27 @@ extension SettingMenuTypeExtension on SettingMenuType {
   String getTitle() {
     switch (this) {
       case SettingMenuType.editProfile:
-        return "Edit Profile";
+        return LocaleKeys.editProfile.tr();
       case SettingMenuType.paymentMethod:
-        return "Payment Method";
+        return LocaleKeys.paymentMethod.tr();
       case SettingMenuType.myPlace:
-        return "My Place";
+        return LocaleKeys.myPlace.tr();
       case SettingMenuType.language:
-        return "Language";
+        return LocaleKeys.language.tr();
       case SettingMenuType.invite:
-        return "Invite a Friend";
+        return LocaleKeys.inviteFriend.tr();
       case SettingMenuType.feedback:
-        return "Application Feedback";
+        return LocaleKeys.feedback.tr();
       case SettingMenuType.termAndCondition:
-        return "Terms and Conditions";
+        return LocaleKeys.termAndConditions.tr();
       case SettingMenuType.privacy:
-        return "Privacy Policy";
+        return LocaleKeys.privacyPolicy.tr();
       case SettingMenuType.paymentAndRefund:
-        return "Payment and Refund Policy";
+        return LocaleKeys.paymentAndRefund.tr();
       case SettingMenuType.deleteUser:
-        return "Delete user account";
+        return LocaleKeys.deleteUserAccount.tr();
       case SettingMenuType.logout:
-        return "Log out";
+        return LocaleKeys.logout.tr();
     }
   }
 

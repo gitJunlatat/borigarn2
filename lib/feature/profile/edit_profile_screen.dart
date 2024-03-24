@@ -7,6 +7,7 @@ import 'package:borigarn/core/widgets/shimmer_list_loading.dart';
 import 'package:borigarn/feature/home/state/get_user.dart';
 import 'package:borigarn/feature/profile/controller/profile_controller.dart';
 import 'package:borigarn/feature/profile/types/edit_form_type.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
@@ -27,63 +28,68 @@ class EditProfileScreen extends HookConsumerWidget {
       phoneNumberController.text = data.phone ?? '';
       emailController.text = data.email ?? '';
 
-      return Scaffold(
-        bottomNavigationBar: Container(
-          padding: const EdgeInsets.only(bottom: 20, top: 10, left: 16, right: 16),
-          child: ButtonWidget(
-            onPressed: () {
+      return Container(
+        color: context.appColors.light,
+        child: SafeArea(
+          child: Scaffold(
+            bottomNavigationBar: Container(
+              padding: const EdgeInsets.only(bottom: 20, top: 10, left: 16, right: 16),
+              child: ButtonWidget(
+                onPressed: () {
 
-              ref.read(profileControllerProvider).saveProfile(usernameController.text, emailController.text);
-            },
-            text: 'SAVE',
-            height: 50,
-            radius: 12,
-            backgroundColor: context.appColors.primary,
-            textColor: Colors.white,
-          ),
-        ),
-        backgroundColor: context.appColors.light,
-        appBar: MainAppBar(
-          title: 'Edit Profile',
-          isCenterTitle: true,
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  EditFormType.name.title,
-                  style: context.textTheme.bodyMedium?.apply(color: Colors.black),
+                  ref.read(profileControllerProvider).saveProfile(usernameController.text, emailController.text);
+                },
+                text: context.tr('save'),
+                height: 50,
+                radius: 12,
+                backgroundColor: context.appColors.primary,
+                textColor: Colors.white,
+              ),
+            ),
+            backgroundColor: context.appColors.light,
+            appBar: MainAppBar(
+              title: context.tr('editProfile'),
+              isCenterTitle: true,
+            ),
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      EditFormType.name.title,
+                      style: context.textTheme.bodyMedium?.apply(color: Colors.black),
+                    ),
+                    const Gap(8),
+                    AppTextField(
+                      hintText: EditFormType.name.title,
+                      controller: usernameController,
+                      prefixIcon: Padding(padding: const EdgeInsets.symmetric(horizontal: 12), child: EditFormType.name.icon.svg(width: 16, height: 16)),
+                    ),
+                    const Gap(20),
+                    Text(
+                      EditFormType.phoneNumber.title,
+                      style: context.textTheme.bodyMedium?.apply(color: Colors.black),
+                    ),
+                    const Gap(8),
+                    AppTextField(
+                        hintText: EditFormType.phoneNumber.title,
+                        controller: phoneNumberController,
+                        prefixIcon: Padding(padding: const EdgeInsets.symmetric(horizontal: 12), child: EditFormType.phoneNumber.icon.svg(width: 16, height: 16))),
+                    const Gap(20),
+                    Text(
+                      EditFormType.email.title,
+                      style: context.textTheme.bodyMedium?.apply(color: Colors.black),
+                    ),
+                    const Gap(8),
+                    AppTextField(
+                        hintText: EditFormType.email.title,
+                        controller: emailController,
+                        prefixIcon: Padding(padding: const EdgeInsets.symmetric(horizontal: 12), child: EditFormType.email.icon.svg(width: 16, height: 16)))
+                  ],
                 ),
-                const Gap(8),
-                AppTextField(
-                  hintText: EditFormType.name.title,
-                  controller: usernameController,
-                  prefixIcon: Padding(padding: const EdgeInsets.symmetric(horizontal: 12), child: EditFormType.name.icon.svg(width: 16, height: 16)),
-                ),
-                const Gap(20),
-                Text(
-                  EditFormType.phoneNumber.title,
-                  style: context.textTheme.bodyMedium?.apply(color: Colors.black),
-                ),
-                const Gap(8),
-                AppTextField(
-                    hintText: EditFormType.phoneNumber.title,
-                    controller: phoneNumberController,
-                    prefixIcon: Padding(padding: const EdgeInsets.symmetric(horizontal: 12), child: EditFormType.phoneNumber.icon.svg(width: 16, height: 16))),
-                const Gap(20),
-                Text(
-                  EditFormType.email.title,
-                  style: context.textTheme.bodyMedium?.apply(color: Colors.black),
-                ),
-                const Gap(8),
-                AppTextField(
-                    hintText: EditFormType.email.title,
-                    controller: emailController,
-                    prefixIcon: Padding(padding: const EdgeInsets.symmetric(horizontal: 12), child: EditFormType.email.icon.svg(width: 16, height: 16)))
-              ],
+              ),
             ),
           ),
         ),

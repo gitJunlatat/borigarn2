@@ -39,8 +39,8 @@ class NetworkManager {
       );
 
       final responseData = onlyData ? response.data["data"] : response.data;
-      print('\n\n\nPATHsdsd: $path \n ------ \n');
-      printWrapped('$response');
+      // print('\n\n\nPATHsdsd: $path \n ------ \n');
+      // printWrapped('$response');
       return rawResponse
           ? response
           : fromJson != null
@@ -61,18 +61,20 @@ class NetworkManager {
         bool rawResponse = false,
       }) async {
     try {
+      log.e("ONSTART");
       final response = await _dio.post(
         '$appBaseUrl$path',
         queryParameters: queryParameters,
         data: data,
       );
 
+      log.e("ONEMD");
+
+
       print('\n\n\nPATH: $path \n ------ \n');
       printWrapped('$response');
 
       final responseData = onlyData ? response.data["data"] : response.data;
-      log.e(path);
-      log.e(response);
       return rawResponse
           ? response
           : fromJson != null
@@ -176,6 +178,8 @@ class NetworkManager {
         );
       }
     }
+    log.e('Error Cast ${error}');
+
     return NetworkException(data: 'Unhandle Response');
   }
 }

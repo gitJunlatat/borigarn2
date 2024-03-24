@@ -1,242 +1,152 @@
 import 'package:borigarn/core/manager/network.dart';
+import 'package:borigarn/core/utils/date.dart';
+import 'package:borigarn/feature/home/models/payload/create_booking_payload.dart';
+import 'package:borigarn/feature/home/models/service_detail.dart';
 import 'package:borigarn/feature/home/types/select_form_type.dart';
 import 'package:borigarn/feature/home/types/service_type.dart';
+import 'package:borigarn/feature/profile/types/language_type.dart';
+import 'package:collection/collection.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:get/get.dart';
 
-class Service {
-  int? id;
-  String? createdAt;
-  String? updatedAt;
-  String? createdBy;
-  String? updatedBy;
-  String? deletedAt;
-  String? deletedBy;
-  String? nameTh;
-  String? nameEn;
-  bool? isPopular;
-  bool? isActive;
-  String? customData;
-  String? descriptionTh;
-  String? descriptionEn;
-  List<ServiceDetails>? details;
+// @freezed
 
-  Service(
-      {this.id,
-        this.createdAt,
-        this.updatedAt,
-        this.createdBy,
-        this.updatedBy,
-        this.deletedAt,
-        this.deletedBy,
-        this.nameTh,
-        this.nameEn,
-        this.isPopular,
-        this.isActive,
-        this.customData,
-        this.details,
-      this.descriptionTh,
-      this.descriptionEn});
+part 'service_model.freezed.dart';
 
-  Service.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-    createdBy = json['createdBy'];
-    updatedBy = json['updatedBy'];
-    deletedAt = json['deletedAt'];
-    deletedBy = json['deletedBy'];
-    nameTh = json['nameTh'];
-    nameEn = json['nameEn'];
-    isPopular = json['isPopular'];
-    isActive = json['isActive'];
-    customData = json['customData'];
-    descriptionTh = json['descriptionTh'];
-    descriptionEn = json['descriptionEn'];
-    if (json['details'] != null) {
-      details = <ServiceDetails>[];
-      json['details'].forEach((v) {
-        details!.add(ServiceDetails.fromJson(v));
-      });
+part 'service_model.g.dart';
+
+@freezed
+class Service with _$Service {
+  const Service._();
+
+  const factory Service({
+    int? id,
+    String? createdAt,
+    String? updatedAt,
+    String? createdBy,
+    String? updatedBy,
+    String? deletedAt,
+    String? deletedBy,
+    String? nameTh,
+    String? nameEn,
+    bool? isPopular,
+    bool? isActive,
+    String? customData,
+    String? descriptionTh,
+    String? descriptionEn,
+    List<ServiceDetails>? details,
+    String? result,
+  }) = _Service;
+
+  factory Service.fromJson(Map<String, dynamic> json) => _$ServiceFromJson(json);
+
+  Service deepCopy() {
+    return copyWith(details: details, result: result);
+  }
+
+  String? getName(LanguageType type) {
+    if (type == LanguageType.en) {
+      return nameEn;
+    } else {
+      return nameTh;
     }
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['id'] = id;
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
-    data['createdBy'] = createdBy;
-    data['updatedBy'] = updatedBy;
-    data['deletedAt'] = deletedAt;
-    data['deletedBy'] = deletedBy;
-    data['nameTh'] = nameTh;
-    data['nameEn'] = nameEn;
-    data['isPopular'] = isPopular;
-    data['isActive'] = isActive;
-    data['customData'] = customData;
-    if (details != null) {
-      data['details'] = details!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-
-  ServiceType getServiceType() {
-    return id?.toServiceType() ?? ServiceType.maidService;
-  }
-}
-
-class ServiceDetails {
-  int? id;
-  String? createdAt;
-  String? updatedAt;
-  String? createdBy;
-  String? updatedBy;
-  String? deletedAt;
-  String? deletedBy;
-  String? textTh;
-  String? textEn;
-  String? type;
-  int? order;
-  List<Service>? items;
-
-  ServiceDetails(
-      {this.id,
-        this.createdAt,
-        this.updatedAt,
-        this.createdBy,
-        this.updatedBy,
-        this.deletedAt,
-        this.deletedBy,
-        this.textTh,
-        this.textEn,
-        this.type,
-        this.order,
-        this.items});
-
-  ServiceDetails.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-    createdBy = json['createdBy'];
-    updatedBy = json['updatedBy'];
-    deletedAt = json['deletedAt'];
-    deletedBy = json['deletedBy'];
-    textTh = json['textTh'];
-    textEn = json['textEn'];
-    type = json['type'];
-    order = json['order'];
-    if (json['items'] != null) {
-      items = <Service>[];
-      json['items'].forEach((v) {
-        items!.add(Service.fromJson(v));
-      });
+  String? getDescription(LanguageType type) {
+    if (type == LanguageType.en) {
+      return descriptionEn;
+    } else {
+      return descriptionTh;
     }
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['id'] = id;
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
-    data['createdBy'] = createdBy;
-    data['updatedBy'] = updatedBy;
-    data['deletedAt'] = deletedAt;
-    data['deletedBy'] = deletedBy;
-    data['textTh'] = textTh;
-    data['textEn'] = textEn;
-    data['type'] = type;
-    data['order'] = order;
-    if (items != null) {
-      data['items'] = items!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+  int? getCost() {
+    switch (id?.toServiceType()) {
+      case ServiceType.maidService:
+        if (details == null) {
+          return 0;
+        }
+        printWrapped("TIME ${details?.where((e) => [5].contains(e.id)).toList()}");
 
-  SelectFormType getFormType() {
-    switch(type) {
-      case 'multi_choice':
-        return  SelectFormType.multiChoice;
-      case 'choice':
-        return  SelectFormType.choice;
-      case 'text_area':
-        return SelectFormType.freeText;
-      case 'date_time':
-        return SelectFormType.dateTime;
+        final numberCleaner = details?.firstWhereOrNull((element) => element.id == 2)?.selected.firstOrNull?.value ?? 0;
+        final priceWorkTime = details?.firstWhereOrNull((element) => element.id == 3)?.selected.firstOrNull?.value ?? 0;
+
+        final extraService = details?.firstWhereOrNull((element) => element.id == 6)?.selected.map((e) => e.value ?? 0).toList() ?? [];
+        log.e(extraService);
+        final totalExtraService = (extraService.isNotEmpty) ? extraService.reduce((value, element) => value + element) : 0;
+        log.e(totalExtraService);
+
+        return (numberCleaner * priceWorkTime) + (numberCleaner * totalExtraService);
       default:
-        log.e(type);
-        return throw Error();
+        return 0;
     }
   }
-}
 
-class ItemsDetail {
-  int? id;
-  String? createdAt;
-  String? updatedAt;
-  String? createdBy;
-  String? updatedBy;
-  String? deletedAt;
-  String? deletedBy;
-  String? nameTh;
-  String? nameEn;
-  String? descriptionTh;
-  String? descriptionEn;
-  int? value;
-  bool? isPopular;
-  bool? isAppraise;
-  bool? isActive;
+  CreateBookingPayload createPayload(LanguageType locale, int locationId) {
+    switch (id?.toServiceType()) {
+      case ServiceType.maidService:
 
-  ItemsDetail(
-      {this.id,
-        this.createdAt,
-        this.updatedAt,
-        this.createdBy,
-        this.updatedBy,
-        this.deletedAt,
-        this.deletedBy,
-        this.nameTh,
-        this.nameEn,
-        this.descriptionTh,
-        this.descriptionEn,
-        this.value,
-        this.isPopular,
-        this.isAppraise,
-        this.isActive});
+        final note = details?.where((element) => [7].contains(element.id)).toList().firstOrNull?.result ?? '';
+        final dateTimePicked = details?.firstWhereOrNull((element) => [5].contains(element.id));
+        final date = DateAction.getDateStringFormattedPayload(dateTimePicked?.date ?? DateTime.now());
+        final time = "${dateTimePicked?.time ?? ''}:00";
 
-  ItemsDetail.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-    createdBy = json['createdBy'];
-    updatedBy = json['updatedBy'];
-    deletedAt = json['deletedAt'];
-    deletedBy = json['deletedBy'];
-    nameTh = json['nameTh'];
-    nameEn = json['nameEn'];
-    descriptionTh = json['descriptionTh'];
-    descriptionEn = json['descriptionEn'];
-    value = json['value'];
-    isPopular = json['isPopular'];
-    isAppraise = json['isAppraise'];
-    isActive = json['isActive'];
+        final choice = details?.where((element) => [39, 1, 2, 3, 4].contains(element.id)).map((e) {
+              return BookingFormField(id: e.id!, value: e.selected.first.value ?? e.selected.first.getName(locale) ?? '');
+            }).toList() ??
+            [];
+
+        final multiChoice = details?.where((element) => [6].contains(element.id)).map((e) {
+              return BookingFormField(id: e.id!, value: '${e.selected.map((e) => e.value ?? 0)}');
+            }).toList() ??
+            [];
+
+        final textArea = details?.where((element) => [40].contains(element.id)).map((e) {
+              return BookingFormField(id: e.id!, value: e.result);
+            }).toList() ??
+            [];
+        final allForm = choice + textArea + multiChoice;
+        print("ALLRESULT");
+
+        final resultFormField = allForm.map((e) => e.toJson()).toList();
+        print(resultFormField);
+
+        return CreateBookingPayload(serviceId: id!, userLocationId: locationId, date: date, time: time, isEstimate: true, note: note, price: getCost() ?? 0, remark: note, formFields: resultFormField, images: []);
+      default:
+        return CreateBookingPayload(serviceId: id!, userLocationId: locationId, date: '', time: '', isEstimate: true, note: '', price: 0, remark: '', formFields: [], images: []);
+    }
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['id'] = id;
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
-    data['createdBy'] = createdBy;
-    data['updatedBy'] = updatedBy;
-    data['deletedAt'] = deletedAt;
-    data['deletedBy'] = deletedBy;
-    data['nameTh'] = nameTh;
-    data['nameEn'] = nameEn;
-    data['descriptionTh'] = descriptionTh;
-    data['descriptionEn'] = descriptionEn;
-    data['value'] = value;
-    data['isPopular'] = isPopular;
-    data['isAppraise'] = isAppraise;
-    data['isActive'] = isActive;
-    return data;
+  String? validate(LanguageType lang) {
+    switch (id?.toServiceType()) {
+      case ServiceType.maidService:
+        final focusIds = [39, 1, 40, 2, 3, 4, 5];
+        final focusItem = details?.where((e) => focusIds.contains(e.id)).toList();
+        final itemNotFill = focusItem?.where((element) {
+          return element.selected.isEmpty && element.result == null && element.date == null && element.time == null;
+        }).toList();
+
+        if ((itemNotFill?.length ?? 0) == 0) {
+          return null;
+        } else {
+          return itemNotFill?.first.getText(lang);
+        }
+
+      case ServiceType.laundryService:
+        final focusIds = [8, 9, 10, 11];
+        final focusItem = details?.where((e) => focusIds.contains(e.id)).toList();
+        final itemNotFill = focusItem?.where((element) {
+          return element.selected.isEmpty && element.result == null;
+        }).toList();
+
+        if ((itemNotFill?.length ?? 0) == 0) {
+          return null;
+        } else {
+          return itemNotFill?.first.getText(lang);
+        }
+
+      default:
+        return null;
+    }
   }
 }
