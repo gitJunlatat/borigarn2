@@ -22,7 +22,7 @@ BookingResponseModel _$BookingResponseModelFromJson(Map<String, dynamic> json) {
 mixin _$BookingResponseModel {
   int? get id => throw _privateConstructorUsedError;
   int? get userLocationId => throw _privateConstructorUsedError;
-  List<String>? get images => throw _privateConstructorUsedError;
+  String? get images => throw _privateConstructorUsedError;
   String? get date => throw _privateConstructorUsedError;
   String? get time => throw _privateConstructorUsedError;
   String? get number => throw _privateConstructorUsedError;
@@ -44,7 +44,7 @@ abstract class $BookingResponseModelCopyWith<$Res> {
   $Res call(
       {int? id,
       int? userLocationId,
-      List<String>? images,
+      String? images,
       String? date,
       String? time,
       String? number,
@@ -87,7 +87,7 @@ class _$BookingResponseModelCopyWithImpl<$Res,
       images: freezed == images
           ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as String?,
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -123,7 +123,7 @@ abstract class _$$BookingResponseModelImplCopyWith<$Res>
   $Res call(
       {int? id,
       int? userLocationId,
-      List<String>? images,
+      String? images,
       String? date,
       String? time,
       String? number,
@@ -161,9 +161,9 @@ class __$$BookingResponseModelImplCopyWithImpl<$Res>
           : userLocationId // ignore: cast_nullable_to_non_nullable
               as int?,
       images: freezed == images
-          ? _value._images
+          ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as String?,
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -194,14 +194,13 @@ class _$BookingResponseModelImpl extends _BookingResponseModel {
   const _$BookingResponseModelImpl(
       {this.id,
       this.userLocationId,
-      final List<String>? images,
+      this.images,
       this.date,
       this.time,
       this.number,
       this.price,
       this.userId})
-      : _images = images,
-        super._();
+      : super._();
 
   factory _$BookingResponseModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$BookingResponseModelImplFromJson(json);
@@ -210,16 +209,8 @@ class _$BookingResponseModelImpl extends _BookingResponseModel {
   final int? id;
   @override
   final int? userLocationId;
-  final List<String>? _images;
   @override
-  List<String>? get images {
-    final value = _images;
-    if (value == null) return null;
-    if (_images is EqualUnmodifiableListView) return _images;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+  final String? images;
   @override
   final String? date;
   @override
@@ -244,7 +235,7 @@ class _$BookingResponseModelImpl extends _BookingResponseModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.userLocationId, userLocationId) ||
                 other.userLocationId == userLocationId) &&
-            const DeepCollectionEquality().equals(other._images, _images) &&
+            (identical(other.images, images) || other.images == images) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.time, time) || other.time == time) &&
             (identical(other.number, number) || other.number == number) &&
@@ -254,16 +245,8 @@ class _$BookingResponseModelImpl extends _BookingResponseModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      userLocationId,
-      const DeepCollectionEquality().hash(_images),
-      date,
-      time,
-      number,
-      price,
-      userId);
+  int get hashCode => Object.hash(runtimeType, id, userLocationId, images, date,
+      time, number, price, userId);
 
   @JsonKey(ignore: true)
   @override
@@ -285,7 +268,7 @@ abstract class _BookingResponseModel extends BookingResponseModel {
   const factory _BookingResponseModel(
       {final int? id,
       final int? userLocationId,
-      final List<String>? images,
+      final String? images,
       final String? date,
       final String? time,
       final String? number,
@@ -301,7 +284,7 @@ abstract class _BookingResponseModel extends BookingResponseModel {
   @override
   int? get userLocationId;
   @override
-  List<String>? get images;
+  String? get images;
   @override
   String? get date;
   @override

@@ -208,11 +208,11 @@ flutter_launcher_icons:
 
 flutter_native_splash:
   web: false
-  image: assets/splash_screen.png
+  image: "assets/splash_screen.png"
   color: "#F5F8F9"
 
   android_12:
-    image: assets/splash_screen.png
+    image: "assets/splash_screen.png"
     color: "#07BEF2"
 
 # For information on the generic Dart part of this file, see the

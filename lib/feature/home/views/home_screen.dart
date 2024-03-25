@@ -38,7 +38,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if(!SharedPrefs().isAuthentication()) {
-
         // context.pushNamed('login');
       }
     });

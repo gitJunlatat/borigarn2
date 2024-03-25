@@ -212,6 +212,7 @@ class MyAssets {
   static const SvgGenImage iconUser = SvgGenImage('assets/icon_user.svg');
   static const SvgGenImage inboxIcon = SvgGenImage('assets/inbox_icon.svg');
   static const SvgGenImage infoIcon = SvgGenImage('assets/info_icon.svg');
+  static const SvgGenImage lineIcon = SvgGenImage('assets/line_icon.svg');
   static const $AssetsLocalGen local = $AssetsLocalGen();
   static const AssetGenImage logoSecond =
       AssetGenImage('assets/logo_second.png');
@@ -256,6 +257,7 @@ class MyAssets {
         iconUser,
         inboxIcon,
         infoIcon,
+        lineIcon,
         logoSecond,
         navBack,
         phoneIcon,

@@ -3,6 +3,7 @@ import 'package:borigarn/core/theme/app_color_extension.dart';
 import 'package:borigarn/core/widgets/ButtonWidget.dart';
 import 'package:borigarn/feature/booking/state/get_booking.dart';
 import 'package:borigarn/feature/booking/state/refresh_booking.dart';
+import 'package:borigarn/feature/home/state/booking_image_picker.dart';
 import 'package:borigarn/gen/assets.gen.dart';
 import 'package:borigarn/global/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -61,6 +62,7 @@ class SuccessBookingScreen extends ConsumerWidget {
                       backgroundColor: context.appColors.primary,
                       onPressed: () {
                         ref.invalidate(getBookingProvider);
+                        ref.invalidate(bookingImagePickerProvider);
                         ref.read(goRouterProvider).goNamed('booking');
                       }),
                 ),
@@ -71,6 +73,7 @@ class SuccessBookingScreen extends ConsumerWidget {
                       backgroundColor: context.appColors.primary.withOpacity(0.1),
                       onPressed: () {
                         ref.invalidate(getBookingProvider);
+                        ref.invalidate(bookingImagePickerProvider);
                         ref.read(goRouterProvider).popUntilPath('/home');
                       }),
                 ),

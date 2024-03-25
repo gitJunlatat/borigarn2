@@ -8,7 +8,7 @@ class BookingModel {
   String? deletedAt;
   String? deletedBy;
   int? id;
-  List<String>? images;
+  String? images;
   bool? isEstimate;
   String? note;
   String? number;

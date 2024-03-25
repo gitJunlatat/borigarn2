@@ -3,9 +3,11 @@ import 'package:borigarn/core/types/booking_status_type.dart';
 import 'package:borigarn/core/utils/wrap_sliver.dart';
 import 'package:borigarn/core/widgets/ButtonWidget.dart';
 import 'package:borigarn/core/widgets/main_app_bar.dart';
+import 'package:borigarn/core/widgets/main_card.dart';
 import 'package:borigarn/feature/authen/widgets/main_appbar.dart';
 import 'package:borigarn/feature/booking/model/booking_model.dart';
 import 'package:borigarn/feature/booking/widgets/booking_card.dart';
+import 'package:borigarn/feature/booking/widgets/list_images.dart';
 import 'package:borigarn/feature/booking/widgets/payment_detail.dart';
 import 'package:borigarn/gen/assets.gen.dart';
 import 'package:flutter/cupertino.dart';
@@ -66,17 +68,18 @@ class BookingDetailScreen extends StatelessWidget {
               color: context.appColors.border,
             ).wrapSliver(),
             const Gap(20).wrapSliver(),
-            Text(
-              'Note',
-              style: context.textTheme.labelSmall?.apply(color: Colors.black),
-            ).wrapSliver(),
-            const Gap(12).wrapSliver(),
-            Container(
-              decoration: BoxDecoration(
-                  border: Border.all(color: context.appColors.border, width: 1),
-                  borderRadius: const BorderRadius.only(topRight: Radius.circular(20), bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20))),
-              child: Padding(padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24), child: Text(model.note ?? '')),
-            ).wrapSliver(),
+            if((model.note ?? '').isNotEmpty)
+              Text(
+                'Note',
+                style: context.textTheme.labelSmall?.apply(color: Colors.black),
+              ).wrapSliver(),
+            if((model.note ?? '').isNotEmpty)
+              const Gap(12).wrapSliver(),
+            if((model.note ?? '').isNotEmpty)
+              MainCard(widget: Text(model.note ?? ''), radius: 20, padding: EdgeInsets.all(20), borderColor: context.appColors.border,).wrapSliver(),
+
+            if((model.images ?? '').split(',').isNotEmpty)
+              ListImages(images: (model.images ?? '').split(','), isLocalImage: false,).wrapSliver(),
             const Gap(24).wrapSliver(),
             Row(
               children: [

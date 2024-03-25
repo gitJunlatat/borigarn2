@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:borigarn/core/route/app_route.dart';
 import 'package:borigarn/feature/home/types/payment_type.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:typed_data';
@@ -33,7 +34,7 @@ abstract class BookingDatasource {
   Future<BookingResponseModel> createBooking(CreateBookingPayload payload, LanguageType lang);
   Future<Uint8List> getQRCode(int amount);
   Future<bool> confirmPayment(BookingResponseModel payload, PaymentType payment, String? couponCode, String? creditCardId);
-
+  Future<List<String>> uploadImage(List<File> images, int? userId);
 
 }
 
@@ -44,6 +45,8 @@ class BookingDatasourceImpl implements BookingDatasource {
 
   final String appBaseUrl = SERVICE_BASE_URL;
   final String paymentUrl = PAYMENT_URL;
+  final String campaignService = CAMPAIGN_BASE_URL;
+
 
   @override
   Future<String> getServiceDetail(String id, LanguageType lang) async {
@@ -55,7 +58,6 @@ class BookingDatasourceImpl implements BookingDatasource {
 
   @override
   Future<List<BookingModel>> getBooking(int page, int limit, BookingStatusType status) async {
-    log.e('ON GET BOOKIN G');
     final response = await networkManager.get('/passport/reservations',
         queryParameters: (status == BookingStatusType.allComing || status == BookingStatusType.allPast) ? {
           'limit': page,
@@ -183,4 +185,37 @@ class BookingDatasourceImpl implements BookingDatasource {
       rethrow;
     }
   }
+
+  @override
+  Future<List<String>> uploadImage(List<File> images, int? userId) async {
+    return await Future.wait( images.mapIndexed((index, element) async {
+      log.e('START UPLOAD');
+      final bytes = element.readAsBytesSync();
+      String base64Image =  "data:image/png;base64,${base64Encode(bytes)}";
+      final name = '${idGenerator()}-$userId-$index';
+      try {
+        final response = await networkManager.post('/image/upload',
+            appBaseUrl: campaignService,
+            data: {
+              'name': name,
+              'base64Asset':base64Image,
+              'slug': name,
+            });
+
+        final filePath = response['filePath'] as String;
+        log.e('RESPONSE ${filePath}');
+        return filePath;
+      }catch(e) {
+        log.e(e);
+        rethrow;
+      }
+    }));
+
+  }
+}
+
+
+String idGenerator() {
+  final now = DateTime.now();
+  return now.microsecondsSinceEpoch.toString();
 }

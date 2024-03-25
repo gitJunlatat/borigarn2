@@ -15,9 +15,11 @@ import 'package:borigarn/feature/authen/type/authen_flow_type.dart';
 import 'package:borigarn/feature/home/models/booking_response_model.dart';
 import 'package:borigarn/feature/home/models/payload/create_booking_payload.dart';
 import 'package:borigarn/feature/home/models/service_model.dart';
+import 'package:borigarn/feature/home/state/booking_image_picker.dart';
 import 'package:borigarn/feature/home/state/booking_payload.dart';
 import 'package:borigarn/feature/home/types/app_button_dialog_type.dart';
 import 'package:borigarn/feature/home/types/payment_type.dart';
+import 'package:borigarn/feature/home/types/service_type.dart';
 import 'package:borigarn/feature/location/state/get_location.dart';
 import 'package:borigarn/feature/profile/types/language_type.dart';
 import 'package:borigarn/global/generated/locale_keys.g.dart';
@@ -28,6 +30,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
@@ -107,12 +110,24 @@ class HomeController {
 
   }
 
-  Future<void> createBooking(CreateBookingPayload payload,LanguageType locale) async {
+  Future<void> createBooking(CreateBookingPayload payload, int? userId,LanguageType locale) async {
     EasyLoading.show();
+    final images = ref.read(bookingImagePickerProvider);
+
     try {
+      if (images.isNotEmpty) {
+        final files = images.map((e) => File(e.path)).toList();
+        final uploadImage = await ref.read(bookingDatasourceProvider).uploadImage(files, userId);
+        payload.images = uploadImage;
+      }
+      log.e(payload.formFields);
       final result = await ref.read(bookingDatasourceProvider).createBooking(payload, locale);
       EasyLoading.dismiss();
-      ref.read(goRouterProvider).pushNamed('payment_screen', extra: result);
+      if(payload.serviceId.toServiceType == ServiceType.maidService) {
+        ref.read(goRouterProvider).pushNamed('payment_screen', extra: result);
+      }else {
+        ref.read(goRouterProvider).pushNamed('success_booking_screen', extra: result.number);
+      }
     }catch(e) {
       AppToast.failed(message: e.toError());
       EasyLoading.dismiss();
@@ -150,5 +165,11 @@ class HomeController {
   }
 
 
+  Future<void> imagePicker(Function(List<XFile>) picked) async {
+    final ImagePicker picker = ImagePicker();
+    final List<XFile> images = await picker.pickMultiImage();
+    ref.read(bookingImagePickerProvider.notifier).setImage(images);
+    picked(images);
+  }
 
 }

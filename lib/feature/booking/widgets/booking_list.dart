@@ -79,8 +79,6 @@ class BookingList extends HookConsumerWidget {
                     final _ = ref.watch(getLocaleProvider);
                     final state = ref.watch(getBookingProvider(status: filterTag.value));
                     return state.when(data: (data) {
-                      log.e("HJI111 ${data.length}");
-            
                       if (data.isEmpty) {
                         return SliverFillRemaining(
                             child: SizedBox(
@@ -89,8 +87,6 @@ class BookingList extends HookConsumerWidget {
                           child: const EmptyView(),
                         ));
                       }
-            
-                      log.e("HJI ${data.length}");
                       return SliverList(
                           delegate: SliverChildBuilderDelegate(
                         (context, index) {
@@ -104,9 +100,6 @@ class BookingList extends HookConsumerWidget {
                         childCount: data.length,
                       ));
                     }, error: (stack, error) {
-                      log.e("USERRROR ");
-            
-                      log.e(stack);
             
                       return SliverFillRemaining(
                           child: SizedBox(

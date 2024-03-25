@@ -38,6 +38,7 @@ class NetworkManager {
         data: data,
       );
 
+      log.e(response);
       final responseData = onlyData ? response.data["data"] : response.data;
       // print('\n\n\nPATHsdsd: $path \n ------ \n');
       // printWrapped('$response');
@@ -178,7 +179,7 @@ class NetworkManager {
         );
       }
     }
-    log.e('Error Cast ${error}');
+    log.e('${path} \n Error Cast  ${error}');
 
     return NetworkException(data: 'Unhandle Response');
   }

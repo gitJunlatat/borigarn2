@@ -11,8 +11,7 @@ _$BookingResponseModelImpl _$$BookingResponseModelImplFromJson(
     _$BookingResponseModelImpl(
       id: json['id'] as int?,
       userLocationId: json['userLocationId'] as int?,
-      images:
-          (json['images'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      images: json['images'] as String?,
       date: json['date'] as String?,
       time: json['time'] as String?,
       number: json['number'] as String?,
