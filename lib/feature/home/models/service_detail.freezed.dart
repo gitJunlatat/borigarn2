@@ -47,6 +47,14 @@ mixin _$ServiceDetails {
       throw _privateConstructorUsedError;
   String? get result => throw _privateConstructorUsedError;
   set result(String? value) => throw _privateConstructorUsedError;
+  String? get result1 => throw _privateConstructorUsedError;
+  set result1(String? value) => throw _privateConstructorUsedError;
+  String? get result2 => throw _privateConstructorUsedError;
+  set result2(String? value) => throw _privateConstructorUsedError;
+  String? get result3 => throw _privateConstructorUsedError;
+  set result3(String? value) => throw _privateConstructorUsedError;
+  String? get result4 => throw _privateConstructorUsedError;
+  set result4(String? value) => throw _privateConstructorUsedError;
   DateTime? get date => throw _privateConstructorUsedError;
   set date(DateTime? value) => throw _privateConstructorUsedError;
   String? get time => throw _privateConstructorUsedError;
@@ -81,6 +89,10 @@ abstract class $ServiceDetailsCopyWith<$Res> {
       int? order,
       List<ServiceItemDetail>? items,
       String? result,
+      String? result1,
+      String? result2,
+      String? result3,
+      String? result4,
       DateTime? date,
       String? time,
       List<ServiceItemDetail> selected});
@@ -112,6 +124,10 @@ class _$ServiceDetailsCopyWithImpl<$Res, $Val extends ServiceDetails>
     Object? order = freezed,
     Object? items = freezed,
     Object? result = freezed,
+    Object? result1 = freezed,
+    Object? result2 = freezed,
+    Object? result3 = freezed,
+    Object? result4 = freezed,
     Object? date = freezed,
     Object? time = freezed,
     Object? selected = null,
@@ -169,6 +185,22 @@ class _$ServiceDetailsCopyWithImpl<$Res, $Val extends ServiceDetails>
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
               as String?,
+      result1: freezed == result1
+          ? _value.result1
+          : result1 // ignore: cast_nullable_to_non_nullable
+              as String?,
+      result2: freezed == result2
+          ? _value.result2
+          : result2 // ignore: cast_nullable_to_non_nullable
+              as String?,
+      result3: freezed == result3
+          ? _value.result3
+          : result3 // ignore: cast_nullable_to_non_nullable
+              as String?,
+      result4: freezed == result4
+          ? _value.result4
+          : result4 // ignore: cast_nullable_to_non_nullable
+              as String?,
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -207,6 +239,10 @@ abstract class _$$ServiceDetailsImplCopyWith<$Res>
       int? order,
       List<ServiceItemDetail>? items,
       String? result,
+      String? result1,
+      String? result2,
+      String? result3,
+      String? result4,
       DateTime? date,
       String? time,
       List<ServiceItemDetail> selected});
@@ -236,6 +272,10 @@ class __$$ServiceDetailsImplCopyWithImpl<$Res>
     Object? order = freezed,
     Object? items = freezed,
     Object? result = freezed,
+    Object? result1 = freezed,
+    Object? result2 = freezed,
+    Object? result3 = freezed,
+    Object? result4 = freezed,
     Object? date = freezed,
     Object? time = freezed,
     Object? selected = null,
@@ -293,6 +333,22 @@ class __$$ServiceDetailsImplCopyWithImpl<$Res>
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
               as String?,
+      result1: freezed == result1
+          ? _value.result1
+          : result1 // ignore: cast_nullable_to_non_nullable
+              as String?,
+      result2: freezed == result2
+          ? _value.result2
+          : result2 // ignore: cast_nullable_to_non_nullable
+              as String?,
+      result3: freezed == result3
+          ? _value.result3
+          : result3 // ignore: cast_nullable_to_non_nullable
+              as String?,
+      result4: freezed == result4
+          ? _value.result4
+          : result4 // ignore: cast_nullable_to_non_nullable
+              as String?,
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -326,6 +382,10 @@ class _$ServiceDetailsImpl extends _ServiceDetails {
       this.order,
       this.items,
       this.result,
+      this.result1,
+      this.result2,
+      this.result3,
+      this.result4,
       this.date,
       this.time,
       this.selected = const []})
@@ -361,6 +421,14 @@ class _$ServiceDetailsImpl extends _ServiceDetails {
   @override
   String? result;
   @override
+  String? result1;
+  @override
+  String? result2;
+  @override
+  String? result3;
+  @override
+  String? result4;
+  @override
   DateTime? date;
   @override
   String? time;
@@ -370,7 +438,7 @@ class _$ServiceDetailsImpl extends _ServiceDetails {
 
   @override
   String toString() {
-    return 'ServiceDetails(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, createdBy: $createdBy, updatedBy: $updatedBy, deletedAt: $deletedAt, deletedBy: $deletedBy, textTh: $textTh, textEn: $textEn, type: $type, order: $order, items: $items, result: $result, date: $date, time: $time, selected: $selected)';
+    return 'ServiceDetails(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, createdBy: $createdBy, updatedBy: $updatedBy, deletedAt: $deletedAt, deletedBy: $deletedBy, textTh: $textTh, textEn: $textEn, type: $type, order: $order, items: $items, result: $result, result1: $result1, result2: $result2, result3: $result3, result4: $result4, date: $date, time: $time, selected: $selected)';
   }
 
   @JsonKey(ignore: true)
@@ -403,6 +471,10 @@ abstract class _ServiceDetails extends ServiceDetails {
       int? order,
       List<ServiceItemDetail>? items,
       String? result,
+      String? result1,
+      String? result2,
+      String? result3,
+      String? result4,
       DateTime? date,
       String? time,
       List<ServiceItemDetail> selected}) = _$ServiceDetailsImpl;
@@ -450,6 +522,18 @@ abstract class _ServiceDetails extends ServiceDetails {
   @override
   String? get result;
   set result(String? value);
+  @override
+  String? get result1;
+  set result1(String? value);
+  @override
+  String? get result2;
+  set result2(String? value);
+  @override
+  String? get result3;
+  set result3(String? value);
+  @override
+  String? get result4;
+  set result4(String? value);
   @override
   DateTime? get date;
   set date(DateTime? value);

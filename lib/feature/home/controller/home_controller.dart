@@ -62,7 +62,9 @@ class HomeController {
             message: '',
             buttons: const [AppButtonDialogType.cancel, AppButtonDialogType.ok],
             onPressed: (buttonType) {
-              ref.read(goRouterProvider).pushNamed('location',);
+              if(buttonType == AppButtonDialogType.ok) {
+                ref.read(goRouterProvider).pushNamed('location',);
+              }
             },
           );
         },
@@ -87,6 +89,7 @@ class HomeController {
         );
 
     if (picked != null) {
+      log.e("PICKLD");
       callback(picked);
     }
   }
@@ -123,7 +126,7 @@ class HomeController {
       log.e(payload.formFields);
       final result = await ref.read(bookingDatasourceProvider).createBooking(payload, locale);
       EasyLoading.dismiss();
-      if(payload.serviceId.toServiceType == ServiceType.maidService) {
+      if(payload.serviceId.toServiceType() == ServiceType.maidService) {
         ref.read(goRouterProvider).pushNamed('payment_screen', extra: result);
       }else {
         ref.read(goRouterProvider).pushNamed('success_booking_screen', extra: result.number);

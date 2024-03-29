@@ -196,6 +196,7 @@ class MyAssets {
   static const $AssetsCategoryGen category = $AssetsCategoryGen();
   static const SvgGenImage checkIcon = SvgGenImage('assets/check_icon.svg');
   static const SvgGenImage closeIcon = SvgGenImage('assets/close_icon.svg');
+  static const SvgGenImage deleteIcon = SvgGenImage('assets/delete_icon.svg');
   static const SvgGenImage editIcon = SvgGenImage('assets/edit_icon.svg');
   static const AssetGenImage enIcon = AssetGenImage('assets/enIcon.png');
   static const SvgGenImage facebookIcon =
@@ -212,6 +213,7 @@ class MyAssets {
   static const SvgGenImage iconUser = SvgGenImage('assets/icon_user.svg');
   static const SvgGenImage inboxIcon = SvgGenImage('assets/inbox_icon.svg');
   static const SvgGenImage infoIcon = SvgGenImage('assets/info_icon.svg');
+  static const SvgGenImage keyIcon = SvgGenImage('assets/key_icon.svg');
   static const SvgGenImage lineIcon = SvgGenImage('assets/line_icon.svg');
   static const $AssetsLocalGen local = $AssetsLocalGen();
   static const AssetGenImage logoSecond =
@@ -242,6 +244,7 @@ class MyAssets {
         cancelIcon,
         checkIcon,
         closeIcon,
+        deleteIcon,
         editIcon,
         enIcon,
         facebookIcon,
@@ -257,6 +260,7 @@ class MyAssets {
         iconUser,
         inboxIcon,
         infoIcon,
+        keyIcon,
         lineIcon,
         logoSecond,
         navBack,

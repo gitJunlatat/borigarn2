@@ -41,7 +41,7 @@ class BookingChoiceView extends HookConsumerWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    mainAxisExtent: 110.h,
+                    mainAxisExtent: 120.h,
                     mainAxisSpacing: 15,
                     childAspectRatio: 1,
                     crossAxisSpacing: 15,
@@ -71,7 +71,7 @@ class BookingChoiceView extends HookConsumerWidget {
                               borderColor: isSelect ? context.appColors.primary : context.appColors.border,
                               radius: 20,
                               padding: const EdgeInsets.all(15),
-                              widget: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                              widget: Column(mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.max, children: [
                                 Text(
                                   item.getName(locale) ?? '',
                                   style: context.textTheme.labelMedium?.apply(color: Colors.black),
@@ -80,7 +80,7 @@ class BookingChoiceView extends HookConsumerWidget {
                                   children: [Gap((item.getDescription(locale)).isNotNullEmpty ? 10 : 0)],
                                 ),
                                 if ((item.getDescription(locale)).isNotNullEmpty)
-                                  Text(item.getDescription(locale) ?? '', style: context.textTheme.bodySmall?.apply(color: context.appColors.subTitle)),
+                                  Flexible(child: Text(item.getDescription(locale) ?? '', style: context.textTheme.bodySmall?.apply(color: context.appColors.subTitle))),
                               ]),
                             ),
                             if (item.isPopular ?? false) const Positioned(left: 8, top: 8, child: PopularView()),

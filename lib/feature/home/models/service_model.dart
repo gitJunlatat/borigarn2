@@ -1,5 +1,6 @@
 import 'package:borigarn/core/manager/network.dart';
 import 'package:borigarn/core/utils/date.dart';
+import 'package:borigarn/core/widgets/app_image_network.dart';
 import 'package:borigarn/feature/home/models/payload/create_booking_payload.dart';
 import 'package:borigarn/feature/home/models/service_detail.dart';
 import 'package:borigarn/feature/home/types/select_form_type.dart';
@@ -41,6 +42,10 @@ class Service with _$Service {
 
   factory Service.fromJson(Map<String, dynamic> json) => _$ServiceFromJson(json);
 
+  bool isMaidService() {
+    return id?.toServiceType() == ServiceType.maidService;
+  }
+
   Service deepCopy() {
     return copyWith(details: details, result: result);
   }
@@ -67,8 +72,6 @@ class Service with _$Service {
         if (details == null) {
           return 0;
         }
-        printWrapped("TIME ${details?.where((e) => [5].contains(e.id)).toList()}");
-
         final numberCleaner = details?.firstWhereOrNull((element) => element.id == 2)?.selected.firstOrNull?.value ?? 0;
         final priceWorkTime = details?.firstWhereOrNull((element) => element.id == 3)?.selected.firstOrNull?.value ?? 0;
 
@@ -271,6 +274,69 @@ class Service with _$Service {
             formFields: resultFormField,
             images: []);
 
+      case ServiceType.defectCheck:
+        final note = details?.where((element) => [32].contains(element.id)).toList().firstOrNull?.result ?? '';
+        final startDateTimePicked = details?.firstWhereOrNull((element) => [31].contains(element.id));
+        final startDate = DateAction.getDateStringFormattedPayload(startDateTimePicked?.date ?? DateTime.now());
+        final startTime = "${startDateTimePicked?.time ?? ''}:00";
+        final textArea = details?.where((element) => [32].contains(element.id)).map((e) {
+          return BookingFormField(id: e.id!, value: e.result);
+        }).toList() ??
+            [];
+        final choice = details?.where((element) => [30].contains(element.id)).map((e) {
+          return BookingFormField(id: e.id!, value: e.selected.first.value ?? e.selected.first.getName(locale) ?? '');
+        }).toList() ??
+            [];
+        final allForm = textArea +choice + [BookingFormField(id: 31, value: "{\"date\":\"$startDate\",\"time\":\"$startTime\"}")];
+        final resultFormField = allForm.map((e) => e.toJson()).toList();
+
+        return CreateBookingPayload(
+            serviceId: id!,
+            userLocationId: locationId,
+            date: startDate,
+            time: startTime,
+            isEstimate: true,
+            note: note,
+            price: getCost() ?? 0,
+            remark: note,
+            formFields: resultFormField,
+            images: []);
+
+      case ServiceType.moving:
+        final note = details?.where((element) => [38].contains(element.id)).toList().firstOrNull?.result ?? '';
+        final startDateTimePicked = details?.firstWhereOrNull((element) => [33].contains(element.id));
+        final startDate = DateAction.getDateStringFormattedPayload(startDateTimePicked?.date ?? DateTime.now());
+        final startTime = "${startDateTimePicked?.time ?? ''}:00";
+
+        final textArea = details?.where((element) => [38].contains(element.id)).map((e) {
+          return BookingFormField(id: e.id!, value: e.result);
+        }).toList() ??
+            [];
+        final choice = details?.where((element) => [36,37].contains(element.id)).map((e) {
+          return BookingFormField(id: e.id!, value: e.selected.first.value ?? e.selected.first.getName(locale) ?? '');
+        }).toList() ??
+            [];
+
+        final moveFrom = details?.firstWhereOrNull((element) => [34].contains(element.id));
+        final moveTo = details?.firstWhereOrNull((element) => [35].contains(element.id));
+        final mFrom = '${moveFrom?.result1 ?? ''} ${moveFrom?.result2} ${moveFrom?.result3} ${moveFrom?.result4}';
+        final mTo = '${moveTo?.result1 ?? ''} ${moveTo?.result2} ${moveTo?.result3} ${moveTo?.result4}';
+
+         final allForm = textArea +choice + [BookingFormField(id: 33, value: "{\"date\":\"$startDate\",\"time\":\"$startTime\"}")] +[BookingFormField(id: 34, value: mFrom), BookingFormField(id: 35, value: mTo)];
+
+        final resultFormField = allForm.map((e) => e.toJson()).toList();
+        return CreateBookingPayload(
+            serviceId: id!,
+            userLocationId: locationId,
+            date: startDate,
+            time: startTime,
+            isEstimate: true,
+            note: note,
+            price: getCost() ?? 0,
+            remark: note,
+            formFields: resultFormField,
+            images: []);
+
       default:
         return CreateBookingPayload(serviceId: id!, userLocationId: locationId, date: '', time: '', isEstimate: true, note: '', price: 0, remark: '', formFields: [], images: []);
     }
@@ -373,7 +439,7 @@ class Service with _$Service {
         final focusIds = [33, 34,35,36,37];
         final focusItem = details?.where((e) => focusIds.contains(e.id)).toList();
         final itemNotFill = focusItem?.where((element) {
-          return element.selected.isEmpty && element.result == null && element.date == null && element.time == null;
+          return element.selected.isEmpty && element.result == null && element.date == null && element.time == null && element.result1.isNullEmpty && element.result2.isNullEmpty && element.result3.isNullEmpty && element.result4.isNullEmpty ;
         }).toList();
 
         if ((itemNotFill?.length ?? 0) == 0) {

@@ -18,6 +18,7 @@ class InboxModel {
   String? updatedBy;
   int? userId;
 
+
   InboxModel(
       {this.createdAt,
         this.createdBy,

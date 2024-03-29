@@ -1,6 +1,7 @@
 import 'package:borigarn/core/theme/app_color_extension.dart';
 import 'package:borigarn/core/widgets/ButtonWidget.dart';
 import 'package:borigarn/core/widgets/main_app_bar.dart';
+import 'package:borigarn/feature/home/state/get_user.dart';
 import 'package:borigarn/feature/profile/types/settings_menu_type.dart';
 import 'package:borigarn/gen/assets.gen.dart';
 import 'package:borigarn/global/generated/locale_keys.g.dart';
@@ -10,12 +11,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:share_plus/share_plus.dart';
 
-class InviteFriendScreen extends StatelessWidget {
+class InviteFriendScreen extends ConsumerWidget {
   const InviteFriendScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final refCode = ref.read(getUserProvider).valueOrNull?.referralCode ?? '';
     return Container(
       color: context.appColors.light,
       child: SafeArea(
@@ -24,7 +28,12 @@ class InviteFriendScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                 child: ButtonWidget(
                   text: context.tr(LocaleKeys.inviteFriendButton),
-                  onPressed: () {},
+                  onPressed: () async {
+                    final result = await Share.shareWithResult("เลขรหัสแนะนำคือ ${refCode}");
+                    if (result.status == ShareResultStatus.success) {
+                      print('Thank you for sharing my website!');
+                    }
+                  },
                   backgroundColor: context.appColors.primary,
                   textColor: Colors.white,
                 )),

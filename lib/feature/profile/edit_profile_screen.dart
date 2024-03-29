@@ -76,6 +76,8 @@ class EditProfileScreen extends HookConsumerWidget {
                     AppTextField(
                         hintText: EditFormType.phoneNumber.title,
                         controller: phoneNumberController,
+                        fillColor: context.appColors.border,
+                        enabled: false,
                         prefixIcon: Padding(padding: const EdgeInsets.symmetric(horizontal: 12), child: EditFormType.phoneNumber.icon.svg(width: 16, height: 16))),
                     const Gap(20),
                     Text(

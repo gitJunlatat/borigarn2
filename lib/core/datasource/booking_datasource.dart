@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 import 'package:borigarn/core/route/app_route.dart';
+import 'package:borigarn/core/utils/date.dart';
 import 'package:borigarn/feature/home/types/payment_type.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ BookingDatasource bookingDatasource(BookingDatasourceRef ref) {
 }
 
 abstract class BookingDatasource {
-  Future<List<BookingModel>> getBooking(int page, int limit, BookingStatusType status);
+  Future<List<BookingModel>> getBooking(int page, int limit, DateTime? date, BookingStatusType status);
   Future<String> getServiceDetail(String id, LanguageType lang);
   Future<BookingResponseModel> createBooking(CreateBookingPayload payload, LanguageType lang);
   Future<Uint8List> getQRCode(int amount);
@@ -57,7 +58,7 @@ class BookingDatasourceImpl implements BookingDatasource {
   }
 
   @override
-  Future<List<BookingModel>> getBooking(int page, int limit, BookingStatusType status) async {
+  Future<List<BookingModel>> getBooking(int page, int limit, DateTime? date, BookingStatusType status) async {
     final response = await networkManager.get('/passport/reservations',
         queryParameters: (status == BookingStatusType.allComing || status == BookingStatusType.allPast) ? {
           'limit': page,
@@ -72,17 +73,37 @@ class BookingDatasourceImpl implements BookingDatasource {
         appBaseUrl: appBaseUrl,
         onlyData: true);
     final listData = response['items'] as List;
-    log.e('ON GET BOOKIN G ${listData.length}');
 
     final totalList = listData.map((e) => BookingModel.fromJson(e)).toList().reversed.toList();
     if(status == BookingStatusType.allComing) {
       final inCase = [BookingStatusType.waitingEstimate, BookingStatusType.waitingPayment, BookingStatusType.waitConfirm, BookingStatusType.confirmed, BookingStatusType.confirmedPaymentCash];
-      return totalList.where((element) => inCase.contains(element.status?.toBookingStatusType())).toList();
+      final total = totalList.where((element) => inCase.contains(element.status?.toBookingStatusType())).toList();
+      if (date != null) {
+        final selectedDate = DateAction.getDateStringFormattedPayload(date);
+        return total.where((element) => element.date == selectedDate).toList();
+      }else {
+        return total;
+      }
+
+
     }else if (status == BookingStatusType.allPast) {
       final inCase = [BookingStatusType.done, BookingStatusType.cancel];
-      return totalList.where((element) => inCase.contains(element.status?.toBookingStatusType())).toList();
+      final total = totalList.where((element) => inCase.contains(element.status?.toBookingStatusType())).toList();
+
+      if (date != null) {
+        final selectedDate = DateAction.getDateStringFormattedPayload(date);
+        return total.where((element) => element.date == selectedDate).toList();
+      }else {
+        return total;
+      }
     }else {
-      return totalList;
+      final total = totalList;
+      if (date != null) {
+        final selectedDate = DateAction.getDateStringFormattedPayload(date);
+        return total.where((element) => element.date == selectedDate).toList();
+      }else {
+        return total;
+      }
     }
   }
 
@@ -116,21 +137,18 @@ class BookingDatasourceImpl implements BookingDatasource {
   Future<Uint8List> getQRCode(int amount) async {
     final path = '${(await getTemporaryDirectory()).path}.svg';
     try {
-      // final response = await networkManager.post('/payment/promptpay',
-      //     data: {
-      //     'amount': amount
-      //     },
-      //     appBaseUrl: paymentUrl,
-      //     onlyData: false);
-      // final res = response as String;
-      // log.e(res);
+      final response = await networkManager.post('/payment/promptpay',
+          data: {
+          'amount': amount
+          },
 
+          appBaseUrl: paymentUrl,
+          onlyData: false);
+
+      final svgUrl = response['source']['scannable_code']['image']['download_uri'] as String;
       var dio = Dio();
-      const svgURL = 'https://api.omise.co/charges/chrg_5z6khrvh36r9vvdbppk/documents/docu_5z6khrxtwgbshh6r90s/downloads/9FF652EAD17D3E92';
-
-
       final svgDownload = await dio.get(
-        svgURL,
+        svgUrl,
         options: Options(
           responseType: ResponseType.plain,
         ),
@@ -144,7 +162,6 @@ class BookingDatasourceImpl implements BookingDatasource {
       File svgFile = File('$appDocPath/$fileName');
       await svgFile.writeAsBytes(utf8.encode(jsonEncode(replaceHeight)));
       final image = await svgToPng(replaceHeight, rootContext()!);
-
       return image;
     }catch(e) {
       log.e(e);

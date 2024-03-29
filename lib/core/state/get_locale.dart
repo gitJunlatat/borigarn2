@@ -8,7 +8,7 @@ part 'get_locale.g.dart';
 class GetLocale extends _$GetLocale {
   @override
   LanguageType build() {
-    return LanguageType.th;
+    return LanguageType.en;
   }
 
   void setLocal(String locale) {

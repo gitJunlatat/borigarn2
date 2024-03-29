@@ -4,13 +4,15 @@ class UserModel {
   String? email;
   String? phone;
   String? pictureUrl;
+  String? referralCode;
 
   UserModel({
-this.id,
+    this.id,
     this.name,
     this.email,
     this.phone,
     this.pictureUrl,
+    this.referralCode
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -18,6 +20,7 @@ this.id,
     name = json['name'];
     email = json['email'];
     phone = json['phone'];
-    pictureUrl = json['pictureUrl'];
+    pictureUrl = json['picture_url'];
+    referralCode = json['referral_code'];
   }
 }

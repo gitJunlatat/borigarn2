@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:borigarn/core/manager/network.dart';
 import 'package:borigarn/core/theme/app_color_extension.dart';
@@ -7,25 +6,19 @@ import 'package:borigarn/core/widgets/ButtonWidget.dart';
 import 'package:borigarn/core/widgets/app_safe_area.dart';
 import 'package:borigarn/core/widgets/group_radio.dart';
 import 'package:borigarn/core/widgets/main_app_bar.dart';
-import 'package:borigarn/core/widgets/main_card.dart';
 import 'package:borigarn/core/widgets/shimmer_list_loading.dart';
-import 'package:borigarn/feature/booking/model/booking_model.dart';
-import 'package:borigarn/feature/booking/widgets/booking_card.dart';
 import 'package:borigarn/feature/booking/widgets/booking_card2.dart';
 import 'package:borigarn/feature/home/controller/home_controller.dart';
 import 'package:borigarn/feature/home/models/booking_response_model.dart';
 import 'package:borigarn/feature/home/state/get_qrcode.dart';
 import 'package:borigarn/feature/home/types/payment_type.dart';
-import 'package:borigarn/gen/assets.gen.dart';
 import 'package:borigarn/global/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -68,27 +61,27 @@ class PaymentScreen extends HookConsumerWidget {
                 model: model,
                 isShowDetail: true,
               ),
-              const Gap(30),
-              Text(context.tr(LocaleKeys.promotionCode)),
-              const Gap(10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                      child: AppTextField(
-                    hintText: context.tr(LocaleKeys.promotionCodeHere),
-                  )),
-                  Gap(10),
-                  ButtonWidget(
-                    onPressed: () {},
-                    text: context.tr(LocaleKeys.applyButton),
-                    textColor: Colors.white,
-                    height: 50,
-                    width: 0.3.sw,
-                    backgroundColor: context.appColors.primary,
-                  )
-                ],
-              ),
+              // const Gap(30),
+              // Text(context.tr(LocaleKeys.promotionCode)),
+              // const Gap(10),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Expanded(
+              //         child: AppTextField(
+              //       hintText: context.tr(LocaleKeys.promotionCodeHere),
+              //     )),
+              //     Gap(10),
+              //     ButtonWidget(
+              //       onPressed: () {},
+              //       text: context.tr(LocaleKeys.applyButton),
+              //       textColor: Colors.white,
+              //       height: 50,
+              //       width: 0.3.sw,
+              //       backgroundColor: context.appColors.primary,
+              //     )
+              //   ],
+              // ),
               const Gap(30),
               Divider(
                 height: 1,
@@ -151,7 +144,7 @@ class PaymentScreen extends HookConsumerWidget {
                       case PaymentType.credit_card:
                         return Container();
                       case PaymentType.qr_code:
-                        return ref.watch(getQrCodeProvider(20000)).when(data: (data) {
+                        return ref.watch(getQrCodeProvider((model.price ?? 0)*100)).when(data: (data) {
                           scrollDown(100);
                           return Stack(children: [
                             Container(

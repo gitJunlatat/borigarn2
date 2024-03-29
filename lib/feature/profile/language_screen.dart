@@ -1,4 +1,5 @@
 import 'package:borigarn/core/manager/network.dart';
+import 'package:borigarn/core/prefs/prefs.dart';
 import 'package:borigarn/core/state/get_locale.dart';
 import 'package:borigarn/core/theme/app_color_extension.dart';
 import 'package:borigarn/core/widgets/ButtonWidget.dart';
@@ -54,6 +55,7 @@ class LanguageScreen extends HookConsumerWidget {
               onTap: () {
                 if(!isSelected) {
                   context.setLocale(Locale(item.name));
+                  SharedPrefs().setLocale = item.name;
                   ref.read(getLocaleProvider.notifier).setLocal(item.name);
                   currentLocale.value = item.name;
                 }

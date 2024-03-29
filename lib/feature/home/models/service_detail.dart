@@ -28,6 +28,11 @@ class ServiceDetails with _$ServiceDetails {
         int? order,
         List<ServiceItemDetail>? items,
         String? result,
+        String? result1,
+        String? result2,
+        String? result3,
+        String? result4,
+
         DateTime? date,
         String? time,
 
@@ -55,6 +60,8 @@ class ServiceDetails with _$ServiceDetails {
         return SelectFormType.freeText;
       case 'date_time':
         return SelectFormType.dateTime;
+      case 'multi_text_area':
+        return SelectFormType.multiFreeText;
       default:
         log.e(type);
         return throw Error();

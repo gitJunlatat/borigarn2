@@ -11,6 +11,4 @@ class VerifyOTPPayload {
     required this.otpCode,
     required this.action,
   });
-
-
 }

@@ -1,4 +1,5 @@
 import 'package:borigarn/core/models/location_model.dart';
+import 'package:borigarn/core/route/app_route.dart';
 import 'package:borigarn/core/theme/app_color_extension.dart';
 import 'package:borigarn/core/utils/wrap_sliver.dart';
 import 'package:borigarn/core/widgets/AppToast.dart';
@@ -69,21 +70,19 @@ class LocationScreen extends ConsumerWidget {
 
                               log.e(result);
                               if (result == true) {
-                                AppToast.success(message: 'Address deleted successfully');
+                                AppToast.success(message: rootContext()!.tr(LocaleKeys.deleteLocationMessage));
                                 ref.invalidate(getLocationProvider);
                                 EasyLoading.dismiss();
                               } else {
-                                AppToast.failed(message: 'Address deletion unsuccessful');
+                                AppToast.failed(message: rootContext()!.tr(LocaleKeys.deleteLocationUnSuccessMessage));
                                 ref.invalidate(getLocationProvider);
                                 EasyLoading.dismiss();
                               }
-
                             },
                             child: Padding(
                               padding: EdgeInsets.only(top: 20, left: 16, right: 16, bottom: isLast ? 20 : 0),
                               child: InkWell(
                                 onTap: () {
-
                                   context.pushNamed('edit_location', extra: location);
                                 },
                                 child: MainCard(
@@ -113,7 +112,7 @@ class LocationScreen extends ConsumerWidget {
                                         ),
                                         const Gap(16),
                                         Row(children: [
-                                          Text(location.address ?? '', style: context.textTheme.bodyMedium?.apply(color: context.appColors.title), textAlign: TextAlign.start)
+                                          Flexible(child: Text(location.address ?? '', style: context.textTheme.bodyMedium?.apply(color: context.appColors.title), textAlign: TextAlign.start))
                                         ])
                                       ],
                                     )),

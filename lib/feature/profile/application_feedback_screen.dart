@@ -40,10 +40,10 @@ class ApplicationFeedbackScreen extends HookConsumerWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const TitleHighlightView(width: 5, wording: 'Thank you for choosing BORIGARN and for your feedback for our providers.',),
-                    Gap(20),
-                    Text(style: context.textTheme.bodyLarge?.apply(color: context.appColors.title),'We want to give you the best experience. To do that, we need your suggestions! In which areas yould you like to see improvement?'),
-                    Gap(20),
+                    TitleHighlightView(width: 5, wording: context.tr(LocaleKeys.titleFeedback)),
+                    const Gap(20),
+                    Text(style: context.textTheme.bodyLarge?.apply(color: context.appColors.title), context.tr(LocaleKeys.detailFeedback)),
+                    const Gap(20),
                     AppTextField(hintText: context.tr(LocaleKeys.yourFeedback),maxLine: 5, controller: feedbackController,)
                   ],
                 ),

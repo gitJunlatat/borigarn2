@@ -4,7 +4,9 @@ import 'package:easy_localization/easy_localization.dart';
 enum EditFormType {
   name,
   phoneNumber,
-  email;
+  email,
+  password,
+  confirmPassword;
 
   String get title {
     switch(this) {
@@ -14,6 +16,10 @@ enum EditFormType {
         return 'phoneNumber'.tr();
       case EditFormType.email:
         return 'email'.tr();
+      case EditFormType.password:
+        return 'password'.tr();
+      case EditFormType.confirmPassword:
+        return 'confirmPassword'.tr();
     }
   }
 
@@ -25,7 +31,9 @@ enum EditFormType {
         return MyAssets.iconPhone;
       case EditFormType.email:
         return MyAssets.iconMail;
-
+      case EditFormType.password:
+      case EditFormType.confirmPassword:
+        return MyAssets.keyIcon;
     }
   }
 }

@@ -1,6 +1,7 @@
 enum AuthenticationOTPType {
   forgotPassword,
-  register;
+  register,
+  registerSSO;
 
   String get action {
     switch(this) {
@@ -8,7 +9,9 @@ enum AuthenticationOTPType {
         return 'recovery';
       case AuthenticationOTPType.register:
         return 'register';
-      }
+      case AuthenticationOTPType.registerSSO:
+        return 'register';
+    }
   }
 }
 
@@ -20,7 +23,7 @@ extension RawAuthenType on String {
       case 'register':
         return AuthenticationOTPType.register;
       default:
-        return  AuthenticationOTPType.register;
+        return  AuthenticationOTPType.registerSSO;
     }
   }
 }
@@ -31,6 +34,8 @@ extension RawData on AuthenticationOTPType {
       case AuthenticationOTPType.forgotPassword:
         return "ลืมรหัสผ่าน";
       case AuthenticationOTPType.register:
+      case AuthenticationOTPType.registerSSO:
+
         return "สมัครสมาชิก";
     }
   }
@@ -95,6 +100,8 @@ extension RawData on AuthenticationOTPType {
       case AuthenticationOTPType.forgotPassword:
         return "forgotPassword";
       case AuthenticationOTPType.register:
+      case AuthenticationOTPType.registerSSO:
+
         return "register";
 
     }

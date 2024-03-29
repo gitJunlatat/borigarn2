@@ -32,7 +32,7 @@ class BookingDateTimePicker extends HookConsumerWidget {
         children: [
           const Gap(24),
           TitleHighlightView(width: 5, wording: detail.getText(locale) ?? ''),
-          Gap(20),
+          const Gap(20),
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),

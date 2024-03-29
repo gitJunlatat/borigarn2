@@ -79,7 +79,7 @@ extension SettingMenuTypeExtension on SettingMenuType {
       case SettingMenuType.paymentAndRefund:
         return MyAssets.profile.questionIcon;
       case SettingMenuType.deleteUser:
-        return MyAssets.profile.questionIcon;
+        return MyAssets.deleteIcon;
       case SettingMenuType.logout:
         return MyAssets.profile.logoutIcon;
     }

@@ -23,6 +23,10 @@ _$ServiceDetailsImpl _$$ServiceDetailsImplFromJson(Map<String, dynamic> json) =>
           ?.map((e) => ServiceItemDetail.fromJson(e as Map<String, dynamic>))
           .toList(),
       result: json['result'] as String?,
+      result1: json['result1'] as String?,
+      result2: json['result2'] as String?,
+      result3: json['result3'] as String?,
+      result4: json['result4'] as String?,
       date:
           json['date'] == null ? null : DateTime.parse(json['date'] as String),
       time: json['time'] as String?,
@@ -49,6 +53,10 @@ Map<String, dynamic> _$$ServiceDetailsImplToJson(
       'order': instance.order,
       'items': instance.items,
       'result': instance.result,
+      'result1': instance.result1,
+      'result2': instance.result2,
+      'result3': instance.result3,
+      'result4': instance.result4,
       'date': instance.date?.toIso8601String(),
       'time': instance.time,
       'selected': instance.selected,

@@ -129,6 +129,11 @@ dependencies:
   flutter_html: ^3.0.0-beta.2
   flutter_widget_from_html: ^0.14.11
   flutter_inappwebview: ^6.0.0
+  calendar_date_picker2: ^0.5.5
+  sign_in_with_apple: ^6.0.0
+  flutter_facebook_auth: ^3.5.0
+  share_plus: ^8.0.2
+
   #  appcenter: ^0.2.1
   #  appcenter_analytics: ^0.2.1
   #  appcenter_crashes: ^0.2.1
@@ -197,10 +202,9 @@ flutter_gen:
 
 
 flutter_launcher_icons:
-  #  android: "launcher_icon"
+  android: "launcher_icon"
   ios: true
-  android: true
-  image_path: "assets/icons/icon_app.png"
+  image_path: "assets/icon_app.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
   remove_alpha_ios: true
 
@@ -209,7 +213,7 @@ flutter_launcher_icons:
 flutter_native_splash:
   web: false
   image: "assets/splash_screen.png"
-  color: "#F5F8F9"
+  color: "#07BEF2"
 
   android_12:
     image: "assets/splash_screen.png"

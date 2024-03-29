@@ -12,6 +12,7 @@ import 'package:borigarn/feature/home/widgets/popular_view.dart';
 import 'package:borigarn/feature/home/widgets/promotion_card.dart';
 import 'package:borigarn/feature/home/widgets/user_content_view.dart';
 import 'package:borigarn/feature/location/state/get_location.dart';
+import 'package:borigarn/gen/assets.gen.dart';
 import 'package:borigarn/global/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,6 +23,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -38,7 +40,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if(!SharedPrefs().isAuthentication()) {
-        // context.pushNamed('login');
+        context.pushNamed('login');
       }
     });
   }
@@ -46,6 +48,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       backgroundColor: context.appColors.light,
       body: RefreshIndicator(
         onRefresh: ()   async {
@@ -239,6 +242,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ],
             )),
       ),
+      floatingActionButton: FloatingActionButton.small(backgroundColor: Colors.transparent,onPressed: () async {
+        String url = 'https://line.me/R/ti/p/%40279dakiw#~';
+        Uri uri = Uri.parse(url);
+        await launchUrl(uri);
+      }, child: MyAssets.lineIcon.svg(width: 70, height: 70),),
     );
   }
 

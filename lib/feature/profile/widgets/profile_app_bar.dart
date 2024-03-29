@@ -1,9 +1,11 @@
+import 'package:borigarn/core/datasource/authen_datasource.dart';
 import 'package:borigarn/core/theme/app_color_extension.dart';
 import 'package:borigarn/core/widgets/app_image_network.dart';
 import 'package:borigarn/core/widgets/main_card.dart';
 import 'package:borigarn/core/widgets/shimmer_list_loading.dart';
 import 'package:borigarn/feature/home/state/get_user.dart';
 import 'package:borigarn/feature/location/state/get_location.dart';
+import 'package:borigarn/feature/profile/controller/profile_controller.dart';
 import 'package:borigarn/gen/assets.gen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,28 +37,36 @@ class ProfileAppBar extends ConsumerWidget implements PreferredSizeWidget {
           builder: (BuildContext context, WidgetRef ref, Widget? child) {
             return Column(
               children: [
-                Gap(50),
+                Gap(60.h),
                 ClipRRect(
-                  borderRadius: const BorderRadius.only(topLeft:  Radius.circular(20),topRight: Radius.circular(100), bottomRight: Radius.circular(100), bottomLeft: Radius.circular(100)),
+                  borderRadius: const BorderRadius.all(Radius.circular(100)),
                   child: SizedBox(
-                    width: 100.w,
-                    height: 100.h,
-                    child: MainCard(
-                        borderColor: context.appColors.primary,
-                        widget: AppImageNetwork(
-                            fit: BoxFit.cover,
-                            imageUrl:
-                                data.pictureUrl ?? ''),
-                        radius: 88,
-                        padding: EdgeInsets.zero),
+                    width: 80.w,
+                    height: 80.h,
+                    child: InkWell(
+                      onTap: () {
+                        ref.read(profileControllerProvider).uploadProfile(data.id);
+                      },
+                      child: MainCard(
+                          borderColor: context.appColors.light,
+                          widget:  Padding(
+                            padding: const EdgeInsets.all(1),
+                            child: AppImageNetwork(
+                              borderRadius: 100,
+                                fit: BoxFit.cover,
+                                imageUrl: data.pictureUrl ?? ''),
+                          ),
+                          radius: 88,
+                          padding: EdgeInsets.zero),
+                    ),
                   ),
                 ),
-                Gap(4),
+                const Gap(4),
                 Text(
                   data.name ?? '',
                   style: context.textTheme.displaySmall?.apply(color: Colors.white),
                 ),
-                Gap(4),
+                const Gap(4),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

@@ -28,12 +28,16 @@ class NetworkManager {
         Function? fromJson,
         required String appBaseUrl,
         Object? data,
+
         bool onlyData = false,
         bool rawResponse = false,
       }) async {
+
+
     try {
       final response = await _dio.get(
         '$appBaseUrl$path',
+
         queryParameters: queryParameters,
         data: data,
       );
@@ -62,18 +66,16 @@ class NetworkManager {
         bool rawResponse = false,
       }) async {
     try {
-      log.e("ONSTART");
       final response = await _dio.post(
         '$appBaseUrl$path',
         queryParameters: queryParameters,
         data: data,
       );
 
-      log.e("ONEMD");
 
-
-      print('\n\n\nPATH: $path \n ------ \n');
-      printWrapped('$response');
+      //
+      // print('\n\n\nPATH: $path \n ------ \n');
+      // printWrapped('$response');
 
       final responseData = onlyData ? response.data["data"] : response.data;
       return rawResponse
@@ -144,10 +146,11 @@ class NetworkManager {
   Future<T> delete<T>(
       String path, {
         Map<String, dynamic>? queryParameters,
-        required Function fromJson,
+        required Function? fromJson,
         required String appBaseUrl,
         Object? data,
         bool onlyData = false,
+        bool rawResponse = false,
       }) async {
     try {
       final response = await _dio.delete(
@@ -156,8 +159,14 @@ class NetworkManager {
         data: data,
       );
 
+      log.e(response);
       final responseData = onlyData ? response.data["data"] : response.data;
-      return fromJson(responseData);
+      return rawResponse
+          ? response
+          : fromJson != null
+          ? fromJson(responseData)
+          : responseData;
+
     } catch (e) {
       throw _handleError(e, appBaseUrl, path);
     }

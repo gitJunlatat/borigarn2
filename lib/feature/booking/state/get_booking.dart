@@ -12,7 +12,7 @@ class GetBooking extends _$GetBooking {
   int _page = 0;
   int _limit = 10;
   @override
-  FutureOr<List<BookingModel>> build({required BookingStatusType status}) async {
+  FutureOr<List<BookingModel>> build({required BookingStatusType status, DateTime? filterDate}) async {
     if(status == BookingStatusType.allComing || status == BookingStatusType.allPast) {
       _limit = 1000;
     }
@@ -20,7 +20,7 @@ class GetBooking extends _$GetBooking {
       _page = 0;
       _limit = 10;
     });
-    final List<BookingModel> models = await ref.watch(bookingDatasourceProvider).getBooking(0,_limit, status);
+    final List<BookingModel> models = await ref.watch(bookingDatasourceProvider).getBooking(0,_limit, filterDate, status);
     return models;
   }
 
@@ -42,7 +42,7 @@ class GetBooking extends _$GetBooking {
 
       final start = _page * _limit;
       final end = (_page * _limit) + _limit;
-      final List<BookingModel> models = await ref.watch(bookingDatasourceProvider).getBooking(start, end, status);
+      final List<BookingModel> models = await ref.watch(bookingDatasourceProvider).getBooking(start, end, filterDate,status);
       final List<BookingModel> updatedData = [...state.asData!.value, ...models];
       state = AsyncData(updatedData);
       ref.read(getBookingIndicatorProvider(status).notifier).hideLoading();

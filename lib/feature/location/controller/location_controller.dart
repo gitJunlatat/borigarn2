@@ -6,6 +6,8 @@ import 'package:borigarn/core/utils/error.dart';
 import 'package:borigarn/core/widgets/AppToast.dart';
 import 'package:borigarn/feature/location/models/payload/select_location.dart';
 import 'package:borigarn/feature/location/state/get_location.dart';
+import 'package:borigarn/global/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -49,14 +51,12 @@ class LocationController {
 
   Future<void> createLocation(SelectLocation location) async {
     if (location.placeName.isEmpty) {
-      //todo โปรดระบุชื่อสถานที่
-      AppToast.failed(message: "Please enter the place's name");
+      AppToast.failed(message: rootContext()!.tr(LocaleKeys.pleaseEnterPlaceName));
       return;
     }
 
     if(!serviceArea.contains(location.administrativeArea)) {
-      //todo ขออภัยคุณอยู่นอกเขตบริการของพื้นที่กรุงเทพมหานคร
-      AppToast.failed(message: "Sorry, you are outside the service area of the Bangkok Metropolitan Region.");
+      AppToast.failed(message: rootContext()!.tr(LocaleKeys.outSideArea));
       return;
     }
 
@@ -66,8 +66,7 @@ class LocationController {
       ref.invalidate(getLocationProvider);
       EasyLoading.dismiss();
 
-      //todo สร้างที่อยู่เรียบร้อยแล้ว
-      AppToast.success(message: 'Address created successfully.');
+      AppToast.success(message: rootContext()!.tr(LocaleKeys.theAddressCreateSuccess));
       ref.read(goRouterProvider).pop();
 
     } catch (e) {
@@ -77,7 +76,33 @@ class LocationController {
   }
 
   Future<void> updateLocation(LocationModel? location, SelectLocation select) async {
+    if(location == null) {
+      return;
+    }
 
+    if (select.placeName.isEmpty) {
+      AppToast.failed(message: rootContext()!.tr(LocaleKeys.pleaseEnterPlaceName));
+      return;
+    }
+
+    if(!serviceArea.contains(select.administrativeArea)) {
+      AppToast.failed(message: rootContext()!.tr(LocaleKeys.outSideArea));
+      return;
+    }
+
+    try {
+      EasyLoading.show();
+      await ref.read(locationDatasourceProvider).updateLocation(location!.id!, select);
+      ref.invalidate(getLocationProvider);
+      EasyLoading.dismiss();
+
+      AppToast.success(message: rootContext()!.tr(LocaleKeys.theAddressCreateSuccess));
+      ref.read(goRouterProvider).pop();
+
+    } catch (e) {
+      AppToast.failed(message: e.toError());
+      EasyLoading.dismiss();
+    }
   }
 
 }

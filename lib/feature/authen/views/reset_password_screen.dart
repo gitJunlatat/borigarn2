@@ -10,7 +10,10 @@ import 'package:borigarn/feature/authen/controller/otp_controller.dart';
 import 'package:borigarn/feature/authen/models/payload/reset_password_payload.dart';
 import 'package:borigarn/feature/authen/models/verify_otp_model.dart';
 import 'package:borigarn/feature/authen/type/authen_flow_type.dart';
+import 'package:borigarn/feature/profile/types/edit_form_type.dart';
 import 'package:borigarn/gen/assets.gen.dart';
+import 'package:borigarn/global/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -34,7 +37,7 @@ class ResetPasswordScreen extends HookConsumerWidget {
     return Scaffold(
       backgroundColor: context.appColors.light,
       appBar: MainAppBar(
-        title: 'Create New Password',
+        title: context.tr(LocaleKeys.createNewPassword),
         isShowBorder: false,
         isCenterTitle: true,
         leftNavigation: const [],
@@ -54,39 +57,85 @@ class ResetPasswordScreen extends HookConsumerWidget {
               MyAssets.logoSecond.image(width: 130.w, height: 75.h),
               const Gap(20),
               Text(
-                'Reset your password',
+                context.tr(LocaleKeys.resetYourPassword),
                 style: context.textTheme.bodyMedium?.apply(color: Colors.black),
               ),
               const Gap(4),
               Text(
-                'Please set a new and strong password',
+                context.tr(LocaleKeys.pleaseSetNewPasswordMessage),
                 style: context.textTheme.bodySmall?.apply(color: context.appColors.subTitle),
               ),
               const Gap(24),
               MainCard(
                   widget: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      HookConsumer(
-                        builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                          final hidePassword = useState<bool>(true);
-                          return AppTextField(
-                            hintText: 'Password',
-                            controller: password,
-                            obscureText: hidePassword.value,
-                          );
-                        },
+
+                      Text(
+                        EditFormType.password.title,
+                        style: context.textTheme.bodyMedium?.apply(color: Colors.black),
                       ),
+                      const Gap(8),
+                      HookBuilder(builder: (context) {
+                        final hidePassword = useState<bool>(true);
+                        return AppTextField(
+                          controller: password,
+                          // focusNode: focusNode,
+                          prefixIcon: Padding(padding: const EdgeInsets.symmetric(horizontal: 12), child: EditFormType.password.icon.svg(width: 16, height: 16)),
+                          obscureText: hidePassword.value,
+                          hintText: EditFormType.password.title,
+                          suffixIcon: GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () => hidePassword.value = !hidePassword.value,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 15,
+                              ),
+                              child: Icon(
+                                hidePassword.value ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                                size: 14,
+                                color: context.appColors.black,
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
                       const Gap(20),
-                      HookConsumer(
-                        builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                          final hidePassword = useState<bool>(true);
-                          return AppTextField(
-                            hintText: 'Confirm Password',
-                            controller: confirmPassword,
-                            obscureText: hidePassword.value,
-                          );
-                        },
+
+
+                      Text(
+                        EditFormType.confirmPassword.title,
+                        style: context.textTheme.bodyMedium?.apply(color: Colors.black),
                       ),
+                      const Gap(8),
+                      HookBuilder(builder: (context) {
+                        final hidePassword = useState<bool>(true);
+                        return AppTextField(
+                          controller: confirmPassword,
+                          // focusNode: focusNode,
+                          prefixIcon: Padding(padding: const EdgeInsets.symmetric(horizontal: 12), child: EditFormType.confirmPassword.icon.svg(width: 16, height: 16)),
+                          obscureText: hidePassword.value,
+                          hintText: EditFormType.confirmPassword.title,
+                          suffixIcon: GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () => hidePassword.value = !hidePassword.value,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 15,
+                              ),
+                              child: Icon(
+                                hidePassword.value ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                                size: 14,
+                                color: context.appColors.black,
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+
+
                       const Gap(40),
                       Row(
                         children: [
@@ -98,13 +147,13 @@ class ResetPasswordScreen extends HookConsumerWidget {
                               enable: isEnable,
                               onPressed: () {
                                 if(passwordText != confirmPasswordText) {
-                                  AppToast.failed(message: 'The Confirm Password does not match');
+                                  AppToast.failed(message: context.tr(LocaleKeys.passwordNotMatch));
                                   return;
                                 }
                                 final payload = ResetPasswordPayload(pass: passwordText, requestId: model.requestId ?? '', phoneNumber: model.phonNumber ?? '');
                                 ref.read(loginControllerProvider).resetPassword(payload);
                               },
-                              text: 'CONFIRM',
+                              text: context.tr(LocaleKeys.confirmButton),
                               textColor: Colors.white,
                               backgroundColor: context.appColors.primary,
                             );

@@ -6,7 +6,7 @@ part of 'get_booking.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getBookingHash() => r'8725ec3e042daf53955e23895252c4c8dc13a99e';
+String _$getBookingHash() => r'fc39690aeadd5f1913db117dafea34af8f103e12';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -32,9 +32,11 @@ class _SystemHash {
 abstract class _$GetBooking
     extends BuildlessAutoDisposeAsyncNotifier<List<BookingModel>> {
   late final BookingStatusType status;
+  late final DateTime? filterDate;
 
   FutureOr<List<BookingModel>> build({
     required BookingStatusType status,
+    DateTime? filterDate,
   });
 }
 
@@ -50,9 +52,11 @@ class GetBookingFamily extends Family<AsyncValue<List<BookingModel>>> {
   /// See also [GetBooking].
   GetBookingProvider call({
     required BookingStatusType status,
+    DateTime? filterDate,
   }) {
     return GetBookingProvider(
       status: status,
+      filterDate: filterDate,
     );
   }
 
@@ -62,6 +66,7 @@ class GetBookingFamily extends Family<AsyncValue<List<BookingModel>>> {
   ) {
     return call(
       status: provider.status,
+      filterDate: provider.filterDate,
     );
   }
 
@@ -86,8 +91,11 @@ class GetBookingProvider extends AutoDisposeAsyncNotifierProviderImpl<
   /// See also [GetBooking].
   GetBookingProvider({
     required BookingStatusType status,
+    DateTime? filterDate,
   }) : this._internal(
-          () => GetBooking()..status = status,
+          () => GetBooking()
+            ..status = status
+            ..filterDate = filterDate,
           from: getBookingProvider,
           name: r'getBookingProvider',
           debugGetCreateSourceHash:
@@ -98,6 +106,7 @@ class GetBookingProvider extends AutoDisposeAsyncNotifierProviderImpl<
           allTransitiveDependencies:
               GetBookingFamily._allTransitiveDependencies,
           status: status,
+          filterDate: filterDate,
         );
 
   GetBookingProvider._internal(
@@ -108,9 +117,11 @@ class GetBookingProvider extends AutoDisposeAsyncNotifierProviderImpl<
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.status,
+    required this.filterDate,
   }) : super.internal();
 
   final BookingStatusType status;
+  final DateTime? filterDate;
 
   @override
   FutureOr<List<BookingModel>> runNotifierBuild(
@@ -118,6 +129,7 @@ class GetBookingProvider extends AutoDisposeAsyncNotifierProviderImpl<
   ) {
     return notifier.build(
       status: status,
+      filterDate: filterDate,
     );
   }
 
@@ -126,13 +138,16 @@ class GetBookingProvider extends AutoDisposeAsyncNotifierProviderImpl<
     return ProviderOverride(
       origin: this,
       override: GetBookingProvider._internal(
-        () => create()..status = status,
+        () => create()
+          ..status = status
+          ..filterDate = filterDate,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         status: status,
+        filterDate: filterDate,
       ),
     );
   }
@@ -145,13 +160,16 @@ class GetBookingProvider extends AutoDisposeAsyncNotifierProviderImpl<
 
   @override
   bool operator ==(Object other) {
-    return other is GetBookingProvider && other.status == status;
+    return other is GetBookingProvider &&
+        other.status == status &&
+        other.filterDate == filterDate;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, status.hashCode);
+    hash = _SystemHash.combine(hash, filterDate.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -160,6 +178,9 @@ class GetBookingProvider extends AutoDisposeAsyncNotifierProviderImpl<
 mixin GetBookingRef on AutoDisposeAsyncNotifierProviderRef<List<BookingModel>> {
   /// The parameter `status` of this provider.
   BookingStatusType get status;
+
+  /// The parameter `filterDate` of this provider.
+  DateTime? get filterDate;
 }
 
 class _GetBookingProviderElement
@@ -169,6 +190,8 @@ class _GetBookingProviderElement
 
   @override
   BookingStatusType get status => (origin as GetBookingProvider).status;
+  @override
+  DateTime? get filterDate => (origin as GetBookingProvider).filterDate;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

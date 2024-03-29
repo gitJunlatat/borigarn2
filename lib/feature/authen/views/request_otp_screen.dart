@@ -9,7 +9,10 @@ import 'package:borigarn/core/widgets/main_card.dart';
 import 'package:borigarn/feature/authen/controller/login_controller.dart';
 import 'package:borigarn/feature/authen/models/payload/request_otp_payload.dart';
 import 'package:borigarn/feature/authen/type/authen_flow_type.dart';
+import 'package:borigarn/feature/profile/types/edit_form_type.dart';
 import 'package:borigarn/gen/assets.gen.dart';
+import 'package:borigarn/global/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -34,7 +37,7 @@ class RequestOtpScreen extends HookConsumerWidget {
         isCenterTitle: true,
         isShowBorder: false,
         leftNavigation: const [ActionNavigationType.navigationBack],
-        title: 'Verification',
+        title: context.tr(LocaleKeys.verification),
         callback: (type) {
           FocusManager.instance.primaryFocus?.unfocus();
         },
@@ -48,13 +51,13 @@ class RequestOtpScreen extends HookConsumerWidget {
               MyAssets.phoneIcon.svg(width: 64.w, height: 64.h),
               const Gap(32),
               Text(
-                'Request OTP',
+                context.tr(LocaleKeys.requestOTP),
                 maxLines: 2,
                 style: context.textTheme.labelMedium?.apply(color: Colors.black),
               ),
               const Gap(10),
               Text(
-                'Please enter the phone number. Ww will send an otp code to your phone number',
+                context.tr(LocaleKeys.requestOTPMessage),
                 textAlign: TextAlign.center,
                 maxLines: 2,
                 style: context.textTheme.bodySmall?.apply(color: context.appColors.subTitle),
@@ -62,11 +65,17 @@ class RequestOtpScreen extends HookConsumerWidget {
               const Gap(24),
               MainCard(
                 widget: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AppTextField(
-                      controller: controller,
-                      hintText: 'Your phone',
+                    Text(
+                      EditFormType.phoneNumber.title,
+                      style: context.textTheme.bodyMedium?.apply(color: Colors.black),
                     ),
+                    const Gap(8),
+                    AppTextField(
+                        hintText: EditFormType.phoneNumber.title,
+                        controller: controller,
+                        prefixIcon: Padding(padding: const EdgeInsets.symmetric(horizontal: 12), child: EditFormType.phoneNumber.icon.svg(width: 16, height: 16))),
                     const Gap(20),
                     HookBuilder(
                       builder: (BuildContext context) {
@@ -78,10 +87,11 @@ class RequestOtpScreen extends HookConsumerWidget {
                               child: ButtonWidget(
                                 enable: phoneNumber.isNotEmpty,
                                 onPressed: () {
+                                  FocusManager.instance.primaryFocus?.unfocus();
                                   final payload = RequestOTPPayload(phone: phoneNumber, action: otpFlowType, deviceId: '', uniqueId: '');
                                   ref.read(loginControllerProvider).requestOTP(payload);
                                 },
-                                text: 'CONFIRM',
+                                text: context.tr(LocaleKeys.confirmButton),
                                 textColor: Colors.white,
                                 backgroundColor: context.appColors.primary,
                               ),

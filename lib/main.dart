@@ -57,9 +57,10 @@ FutureOr<void> mainCommon() async {
      ProviderScope(
       // observers: [Observers()],
       child: EasyLocalization(
-        supportedLocales: const [Locale('th'), Locale('en')],
+        supportedLocales: const [Locale('en'),Locale('th')],
         path: 'assets/translations',
-        fallbackLocale: const Locale('th'),
+        startLocale: Locale(SharedPrefs().localeData),
+        fallbackLocale: Locale(SharedPrefs().localeData),
           assetLoader: const CodegenLoader(),
 
 

@@ -109,7 +109,11 @@ class _MyAppState extends ConsumerState<EditLocationScreen> {
                 data?.address = addressController.text;
                 data?.placeName = placeNameController.text;
                 data?.landmark = landMarkController.text;
-                ref.read(locationControllerProvider).createLocation(data!);
+                if(widget.currentLocation == null) {
+                  ref.read(locationControllerProvider).createLocation(data!);
+                }else {
+                  ref.read(locationControllerProvider).updateLocation(widget.currentLocation, data!);
+                }
               },
               text: context.tr(LocaleKeys.confirm),
               height: 50,

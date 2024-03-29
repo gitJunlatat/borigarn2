@@ -59,7 +59,11 @@ class InboxView extends ConsumerWidget {
                               ),
                               const Gap(8),
                               Text(
-                                inbox.updatedAt ?? '',
+
+                              DateAction.getDateTimeStringFormattedPayload(DateTime.parse(inbox.updatedAt ?? '')),
+
+
+
                                 style: context.textTheme.bodyMedium?.apply(color: context.appColors.subTitle),
                               )
                             ]),

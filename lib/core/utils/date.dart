@@ -80,6 +80,16 @@ class DateAction {
     return formattedDate;
   }
 
+  static String getDateTimeStringFormattedPayload(DateTime dateTime) {
+    tz.initializeTimeZones();
+    tz.Location timeZone = tz.getLocation('Asia/Bangkok');
+
+    dateTime = tz.TZDateTime.from(dateTime, timeZone);
+    String formattedDate = DateFormat('yyyy-MM-dd MM:HH').format(dateTime);
+    return formattedDate;
+  }
+
+
   static String convertThaiDateToISODate(String thaiDate) {
     final months = {
       'ม.ค.': '01',

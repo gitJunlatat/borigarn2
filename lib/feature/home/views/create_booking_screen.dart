@@ -15,6 +15,7 @@ import 'package:borigarn/feature/home/state/get_user.dart';
 import 'package:borigarn/feature/home/types/select_form_type.dart';
 import 'package:borigarn/feature/home/widgets/booking_choice_view.dart';
 import 'package:borigarn/feature/home/widgets/booking_date_time_picker.dart';
+import 'package:borigarn/feature/home/widgets/booking_multi_text_area_view.dart';
 import 'package:borigarn/feature/home/widgets/booking_text_area_view.dart';
 import 'package:borigarn/feature/location/state/get_location.dart';
 import 'package:borigarn/feature/profile/types/language_type.dart';
@@ -64,7 +65,14 @@ class CreateBookingScreen extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
+                      if(!model.isMaidService())
+                        Text(
+                          '${context.tr(LocaleKeys.estimate)}',
+                          style: context.textTheme.bodyMedium?.apply(color: context.appColors.title),
+                        ),
+
+                      if(model.isMaidService())
+                      Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
@@ -84,7 +92,7 @@ class CreateBookingScreen extends ConsumerWidget {
                             }),
                           ],
                         ),
-                        Text(
+                          Text(
                           '*${context.tr(LocaleKeys.excludingDiscount)}',
                           style: context.textTheme.bodyMedium?.apply(color: context.appColors.title),
                         ),
@@ -186,8 +194,10 @@ class CreateBookingScreen extends ConsumerWidget {
                       );
                     case SelectFormType.freeText:
                       return BookingTextAreaView(detail: details[index]);
+                    case SelectFormType.multiFreeText:
+                      return BookingMultiTextAreaView(detail: details[index]);
                     default:
-                      return SizedBox.shrink();
+                      return Container();
                   }
                 },
               );

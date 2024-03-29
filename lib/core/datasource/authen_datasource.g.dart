@@ -6,7 +6,7 @@ part of 'authen_datasource.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authenDatasourceHash() => r'78d03f73a4fd19f568f5af61db5753b45fb245f9';
+String _$authenDatasourceHash() => r'55fe49802dd63ea8565ba24e0f71a296d18921d6';
 
 /// See also [authenDatasource].
 @ProviderFor(authenDatasource)

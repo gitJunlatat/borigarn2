@@ -5,6 +5,7 @@ import 'package:borigarn/feature/authen/models/verify_otp_model.dart';
 import 'package:borigarn/feature/authen/models/payload/verify_otp_payload.dart';
 import 'package:borigarn/feature/authen/type/authen_flow_type.dart';
 import 'package:borigarn/feature/authen/views/login_screen.dart';
+import 'package:borigarn/feature/authen/views/register_screen.dart';
 import 'package:borigarn/feature/authen/views/request_otp_screen.dart';
 import 'package:borigarn/feature/authen/views/reset_password_screen.dart';
 import 'package:borigarn/feature/authen/views/verify_otp_screen.dart';
@@ -27,6 +28,9 @@ import 'package:borigarn/feature/profile/application_feedback_screen.dart';
 import 'package:borigarn/feature/profile/edit_profile_screen.dart';
 import 'package:borigarn/feature/profile/invite_friend_screen.dart';
 import 'package:borigarn/feature/profile/language_screen.dart';
+import 'package:borigarn/feature/profile/payment_add_card_screen.dart';
+import 'package:borigarn/feature/profile/payment_edit_card_screen.dart';
+import 'package:borigarn/feature/profile/payment_method_screen.dart';
 import 'package:borigarn/feature/profile/privacy_screen.dart';
 import 'package:borigarn/feature/profile/profile_screen.dart';
 import 'package:borigarn/feature/profile/types/settings_menu_type.dart';
@@ -214,6 +218,18 @@ final router = GoRouter(
               otpType: otpFlowType,
             );
           },
+        ),
+        GoRoute(
+          name: 'register_screen',
+          path: 'register_screen',
+          parentNavigatorKey: rootNavigation,
+          builder: (context, state) {
+            final (model, otpFlowType) = state.extra as (VerifyOTPModel, AuthenticationOTPType);
+            return RegisterScreen(
+              model: model,
+              otpType: otpFlowType,
+            );
+          },
         )
       ],
       //   GoRoute(
@@ -279,6 +295,36 @@ final router = GoRouter(
         return const AppAnnotatedRegion.dark(child: InviteFriendScreen());
       },
     ),
+
+
+
+    GoRoute(
+      name: 'payment_method',
+      path: '/payment_method',
+      parentNavigatorKey: rootNavigation,
+      builder: (context, state) {
+        return const AppAnnotatedRegion.dark(child: PaymentMethodScreen());
+      },
+    ),
+
+    GoRoute(
+      name: 'payment_add_card',
+      path: '/payment_add_card',
+      parentNavigatorKey: rootNavigation,
+      builder: (context, state) {
+        return const AppAnnotatedRegion.dark(child: PaymentAddCard());
+      },
+    ),
+
+    GoRoute(
+      name: 'payment_edit_card',
+      path: '/payment_edit_card',
+      parentNavigatorKey: rootNavigation,
+      builder: (context, state) {
+        return const AppAnnotatedRegion.dark(child: PaymentEditCard());
+      },
+    ),
+
 
 
     GoRoute(
